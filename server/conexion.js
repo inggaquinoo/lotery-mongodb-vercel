@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 //mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.dp6bpsr.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,{useNewUrlParser: true, useUnifiedTopology: true})
 //mongoose.connect(`mongodb+srv://gustavo:1234567890@cluster0.dp6bpsr.mongodb.net/lotery?retryWrites=true&w=majority`,{useNewUrlParser: true, useUnifiedTopology: true})
 //mongoose.connect(process.env.MONGO_CONNECT_URI)
-console.log ("cadena ->     "+process.env.MONGO_CONNECT_URI)
+//console.log ("cadena ->     "+process.env.MONGO_CONNECT_URI)
 mongoose.connect(process.env.MONGO_CONNECT_URI,{useNewUrlParser: true, useUnifiedTopology: true})
 
 //Esto se crea para crear los msjes de conexión

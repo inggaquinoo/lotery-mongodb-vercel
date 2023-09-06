@@ -37,7 +37,8 @@ const ListadoSorteos = ({ navigation, route }) => {
         
         try {
             //const res = await fetch('http://192.168.18.10:5000/api/sorteos')
-            const res = await fetch('http://192.168.101.20:5000/api/sorteos')
+            //const res = await fetch('http://192.168.101.20:5000/api/sorteos')
+            const res = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos')
             const data = await res.json();
             setSorteos(data)
 
@@ -98,7 +99,7 @@ const ListadoSorteos = ({ navigation, route }) => {
 
 <View  style={{ backgroundColor: '#fff', flex: 1, paddingTop: Platform.OS === "android"? 
 StatusBar.currentHeight: 0 }} >
-    <Text style={styles.heading} >S O R T E O S</Text>
+    <Text style={styles.heading} >S O R T E O S - 6/9/2023-13:20</Text>
     <ScrollView>
         <SafeAreaView >        
         <View

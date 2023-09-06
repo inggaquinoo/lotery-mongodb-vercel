@@ -19,6 +19,11 @@
 }
 */
 
+/*
+
+esta linea iba despues de routes en vercel
+"rewrites": [{ "source": "/(.*)", "destination": "/" }]
+*/
 
 require('dotenv').config();
 

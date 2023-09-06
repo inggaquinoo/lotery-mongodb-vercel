@@ -37,6 +37,6 @@ mongoose.connect(process.env.MONGO_CONNECT_URI,{useNewUrlParser: true, useUnifie
 const objetobd = mongoose.connection                                                                                                                
                         //funcion callback ()=>
     objetobd.on('connected',()=>{console.log('Conexion correcta a MongoDB')})
-    objetobd.on('error',()=>{console.log('Error en la conexion a MongoDB'+error)})
+    objetobd.on('error',()=>{console.log('Error en la conexion a MongoDB')})
 
 module.exports = mongoose

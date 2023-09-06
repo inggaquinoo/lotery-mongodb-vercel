@@ -1,5 +1,25 @@
 //variable de entorno, es usada porque no siempre vamos
 //a poder correr el programa en un puerto especifico 
+
+/*
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "./index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+    ]
+}
+*/
+
+
 require('dotenv').config();
 
 const mongoose = require('mongoose');

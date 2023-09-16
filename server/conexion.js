@@ -1,3 +1,43 @@
+//const fs = require('fs');
+//const path = require('path');
+
+//const logo = fs.readFileSync(path.resolve(__dirname, './assets/img/logo.svg'));
+
+//const dirname = 'file://storage/emulated/0/Documents/Loteria/';
+
+//console.log ("que es: ->>   "+'/storage/emulated/0/Download'.split(path.sep))
+
+//const binaryData = fs.readFileSync(path.resolve('C:/UNIDAD D/', 'abc.pdf')); //funciona ok
+
+//const binaryData = fs.readFileSync('/Download/abc.pdf');
+//const binaryData = fs.readFileSync('/storage/emulated/0/Download/abc.pdf');
+//const binaryData = fs.readFileSync('file:///storage/emulated/0/Download/abc.pdf');
+
+
+//const binaryData = fs.readFileSync(path.resolve('/UNIDAD D', 'abc.pdf'));
+//const binaryData = fs.readFileSync(path.resolve('//storage/emulated/0/Android/data/com.thelotery/files', 'abc.pdf'));
+
+
+//Este equipo\Galaxy A10\Phone\Android\data\com.thelotery\files
+///Android/data/packageName/files
+//file:///storage/emulated/0/Android/data/packageName/files/
+
+
+//const filename = "package.json";
+//const filename = "abc.pdf";
+//const filename = "https://cs.uns.edu.ar/materias/iocp/downloads/Apuntes/Unidad%203%20-%20Internet.pdf";
+
+//const binaryData = fs.readFileSync('https://cs.uns.edu.ar/materias/iocp/downloads/Apuntes/Unidad%203%20-%20Internet.pdf');
+
+/*
+const base64String = new Buffer(binaryData).toString("base64");
+console.log("A N T E S");
+console.log(base64String);
+console.log("Current directory:", __filename);
+console.log("Current directory:", __dirname);
+*/
+//////////////
+
 //variable de entorno, es usada porque no siempre vamos
 //a poder correr el programa en un puerto especifico 
 require('dotenv').config();
@@ -18,5 +58,10 @@ const objetobd = mongoose.connection
                         //funcion callback ()=>
     objetobd.on('connected',()=>{console.log('Conexion correcta a MongoDB')})
     objetobd.on('error',()=>{console.log('Error en la conexion a MongoDB')})
+
+
+
+
+
 
 module.exports = mongoose

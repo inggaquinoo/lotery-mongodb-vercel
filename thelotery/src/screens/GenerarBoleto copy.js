@@ -1,20 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import RNFS from 'react-native-fs';
-import {request, PERMISSIONS} from 'react-native-permissions';
-import Share from 'react-native-share';
-import RNFetchBlob from 'rn-fetch-blob';
-import * as OpenAnything from "react-native-openanything";
-import { Base64 } from 'js-base64';
-import base64 from 'react-native-base64';
-  
-const GenerarBoleto = ({navigation, route}) => {
-  //const fs = RNFetchBlob.fs;
-  //const filePath = RNFS.DocumentDirectoryPath + "/joke.txt";
-  //const filePath = RNFS.ExternalStorageDirectoryPath + "/joke.txt";
-  //const [fileData, setFileData] = useState();
+//import * as OpenAnything from "react-native-openanything";
 
+const GenerarBoleto = ({navigation, route}) => {
   
   //route.params.id
   //console.log("route.params ->    " + route.params.IDBoleto)
@@ -32,21 +22,6 @@ const GenerarBoleto = ({navigation, route}) => {
   const estado_boleto = "1";
   */
 
-  //lo que sigue borralo, es solo para que no te de error
-/*
-  const sorteo_id = "route.params.IDSorteo;"
-  const usuario_id = "route.params.IDusuario;"
-  const descripcionarti = "route.params.descripcionarticulos;"
-  const costoarti = "route.params.costoarticulos;"
-  const nombrecli = "route.params.nombrecliente;"
-  const apellidocli = "route.params.apellidocliente;"
-  const celularclie = "route.params.celularcliente;"
-  const fecha_compra = "2023-08-28";
-  const estado_boleto = "1";
-*/
-
-// Liberar desde aqui cuando otorguen los permisos
-
   const sorteo_id = route.params.IDSorteo;
   const usuario_id = route.params.IDusuario;
   const descripcionarti = route.params.descripcionarticulos;
@@ -59,6 +34,7 @@ const GenerarBoleto = ({navigation, route}) => {
 
   const GenerarBoletoComprobante = async(usuario_id, fecha_compra, estado_boleto) => {
     //En este caso _id es el id del boleto
+
     console.log("Comenzando generación de Boleto")
     console.log("IDBoleto ->    "+route.params.IDBoleto);
     console.log("usuario_id ->    "+usuario_id);
@@ -69,7 +45,6 @@ const GenerarBoleto = ({navigation, route}) => {
     //console.log("Valores ->    " + name + " " + apellido + " " + numcelular)
     //const response = await fetch(`http://192.168.18.10:5000/api/sorteos/${route.params.IDBoleto}`,{
     //const response = await fetch(`http://192.168.101.20:5000/api/sorteos/${route.params.IDBoleto}`,{
-
     const response = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/${route.params.IDBoleto}`,{
           method: 'PUT',
           headers: {
@@ -170,16 +145,18 @@ const GenerarBoleto = ({navigation, route}) => {
           html,
           fileName: `${route.params.IDBoleto}-${route.params.nombrecliente} ${route.params.apellidocliente}`,
           directory: 'Loteria888',
-          //base64: true,
         };
         const file = await RNHTMLtoPDF.convert(options); //esta línea guarda el boleto en la carpeta del movil
         console.log("Ya se guardó en la carpeta LOTERÍA DEL MOVIL")
-        
+        //OpenAnything.Pdf('file:///storage/emulated/0/Documents/Loteria/abc.pdf')
+        //OpenAnything.Pdf('https://www.exteriores.gob.es/documents/fichaspais/peru_ficha%20pais.pdf')
+
         //https://www.exteriores.gob.es/documents/fichaspais/peru_ficha%20pais.pdf
         //Alert.alert('Success', `Boleto guardado en: ${file.filePath}`);
         //Alert.alert('Success', 'PDF saved to');
         
-        
+        //setCount(count + 1);
+        //setIsLoading(false);
       } 
       catch (error) {
         Alert.alert(error);
@@ -189,99 +166,215 @@ const GenerarBoleto = ({navigation, route}) => {
       //navigation.navigate('ListadoSorteos')
      
 }
-//Liberar desde aqui cuando otorguen los permisos
+
+
+const mostrarPdf = () => {
+
+/*
+  var RNFS = require('react-native-fs');
+
+// get a list of files and directories in the main bundle
+//RNFS.readDir(RNFS.MainBundlePath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+RNFS.readDir(RNFS.DownloadDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+  .then((result) => {
+    console.log('GOT RESULT', result);
+
+    // stat the first file
+    return Promise.all([RNFS.stat(result[0].path), result[0].path]);
+  })
+  .then((statResult) => {
+    if (statResult[0].isFile()) {
+      // if we have a file, read it
+      return RNFS.readFile(statResult[1], 'utf8');
+    }
+
+    return 'no file';
+  })
+  .then((contents) => {
+    // log the file contents
+    console.log(contents);
+  })
+  .catch((err) => {
+    console.log(err.message, err.code);
+  });
+
+*/
+
+
+///********************************INTENTO 9_9_2023 - 9_56 AM
+
+
+ try {
  
+  //RNFS.readDir(RNFS.DownloadDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+  //RNFS.readDir("path:/storage/emulated/0/Download/Nearby Share") // sí da resultado - On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+  
+
+   //RNFS.readFile('/storage/emulated/0/Documents/Loteria/abc.pdf', 'utf8')
+   RNFS.readFile('/storage/emulated/0/Download/Nearby Share/abcd.pdf', 'base64')
+   .then((contents) => {
+    // log the file contents
+    console.log("Este es el contenido: ->   "+contents);
+  })
+
+    
 
 
-const pedirpermisoindian = (permiso) => {
-      request(permiso)
-      .then(result => {
-        console.log(result)
-        if (result === 'granted')
-              {
-                console.log("AQUI IRIA LA PARTE DE ACCEDER AL ARCHIVO")
-            //otro intento
-                  // get a list of files and directories in the main bundle
-                  //RNFS.readDir(RNFS.ExternalDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-                  //RNFS.readDir(RNFS.ExternalDirectoryPath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
 
-                  ///NOTAS IMPORTANTES
-                  //RNFS.ExternalDirectoryPath -> cada uno de estas extensiones despues de RNFS apunta
-                  //hacia lugares distintos en el móvil y todos no leen los archivos PDF ni word!!!
-                                    
-                  //https://www.youtube.com/watch?v=amTnwvJF8CA //Mira este video para
-                  //que copies el archivo hacia una carpeta desde donde sí se pueda leer el PDF
-                  ////******************** */
-                  
-                  // readFile(filepath: string, encoding?: string)
-                      RNFS.readFile('file:///storage/emulated/0/Android/data/com.thelotery/files/abc.pdf', 'base64')
-                      
-                      .then(res => {
-                      console.log(res)
-                      //Preparando la cadena para enviar a url para compartir en Whatsapp
-                      const cadena = "data:application/pdf;base64,"+res;
 
-                            ///////////INICIANDO COMPARTIR CON WHATSAPP
-                            const shareOptions = {
-                              message: 'Hola Tavo te esta enviando un mensaje de prueba',
-                              social: Share.Social.WHATSAPP,
-                              url: cadena,
-                              //whatsAppNumber: "9199999999",  // country code + phone number
-                              filename: 'abc.pdf' , // only for base64 file in Android
-                              };
-                                try {
-                                  //const ShareResponse = Share.open(shareOptions)
-                                  const ShareResponse = Share.shareSingle(shareOptions)
-                                  console.log(JSON.stringify(ShareResponse))
-                                  console.log("Share response      "+ShareResponse)
-                                }catch (error) {
-                                    console.log("error ->   "+error)
-                                }
-                                // para cuando envies directo a whatsapp
-                                //Share.shareSingle(shareOptions)
-                                //  .then((res) => { console.log(res) })
-                                //  .catch((err) => { err && console.log(err); });
+  
+ /*
+  RNFS.readDir("/storage/emulated/0/Documents") //esto funciona
+ 
+  .then((result) => {
+    console.log('GOT RESULT', result);
+    // stat the first file
+    //return Promise.all([RNFS.stat(result[0].path), result[0].path]);
+    return Promise.all([RNFS.stat(result[0].path), result[0].path]);
+  })
+  
+  
+  .then((statResult) => {
+    if (statResult[0].isFile()) {
+      // if we have a file, read it
+      return RNFS.readFile(statResult[1], 'utf8');
+    }
 
-                      })
-                      .catch(err => {
-                        console.log(err.message, err.code);
-                      });
+    return 'no file';
+  })
+  .then((contents) => {
+    // log the file contents
+    console.log("Este es el contenido: ->   "+contents);
+  })
+  .catch((err) => {
+    console.log(err.message, err.code);
+  });
 
-                  //Cuando lees directorios y adentro archivos
-                  /*
-                  RNFS.readDir(              
-                    "file:///storage/emulated/0/Android/data/com.thelotery/files/abc.pdf"
-                    ) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-                  .then((result) => {
-                    console.log('------- +++++++++++++ GOT RESULT ++++++++++++++', result);
+ */
+ 
+ 
+  //let filename = "ruta/directorio/root";
+/*
+      let filename = RNFS.readDir(RNFS.DownloadDirectoryPath) 
 
-                    // stat the first file
-                    return Promise.all([RNFS.stat(result[0].path), result[0].path]);
-                  })
+      let Filename = fileName.split('.').slice(0, -1).join('.');
+      const extension = fileName.split('.').slice(1).join('.');
+      const NameWithoutExtension = Filename.split('.').slice(0, -1).join('.');
+      Filename = Filename + Date.now() + '.' + extension;
+      console.log('extension:', Filename);
+*/
+      /*
+      setLoader(true);
+      RNFS.copyFile(file, RNFS.DownloadDirectoryPath + '/tempFile.' + extension)
+        .then(copyResponce => {
+          console.log('copyResponce:', copyResponce);
+          RNFS.exists(RNFS.DownloadDirectoryPath + '/tempFile.' + extension)
+            .then(isexist => {
+              console.log('isexist:', isexist);
 
-                  .then((statResult) => {
-                    if (statResult[0].isFile()) {
-                      // if we have a file, read it
-                      //return RNFS.readFile(statResult[1], 'utf8');
-                      return RNFS.readFile(statResult[1], 'base64'); //base64 fue la clave para poder compartir el archivo PDF
-                    }
-                    return 'no file';
-                  })
+              const StorageRef = storage().ref(`ResumeData/${Filename}`);
+              StorageRef.putFile(
+                RNFS.DownloadDirectoryPath + '/tempFile.' + extension,
+              )
+                .then(async res => {
+                  const url = await StorageRef.getDownloadURL();
+                  console.log('fileuploaded:', url);
+                  console.log('res:', res);
+                  //adding data to firebase cloud
+                  await firestore()
+                    .collection(DB_Name.all_resource)
+                    .add({
+                      Name: Name,
+                      Experience: Experience,
+                      Technology: service,
+                      Contact: Phone,
+                      Resume: url,
+                      senderId: uid,
+                    })
+                    .then(() => {
+                      console.log('Resource Post Success!');
+                      navigation.goBack();
+                      setLoader(false);
+                      setExperience(null);
+                      setName(null);
+                    });
+                  // Removing Temp stored file
+                  RNFS.unlink(
+                    RNFS.DownloadDirectoryPath + '/tempFile.' + extension,
+                  )
+                    .then(del => {
+                      setLoader(false);
+                      console.log('delete Tempfile Success!', del);
+                    })
+                    .catch(error => {
+                      setLoader(false);
+                      console.log('Error in Deleting Tempfile:', error);
+                    });
+                })
+                .catch(error => {
+                  setLoader(false);
+                  console.log('errorin uploading', error);
+                });
+            })
+            .catch(err => {
+              setLoader(false);
+              console.log('notExist:', err);
+            });
+    
+        })
+        .catch(error => console.log('error in Copy Responce:', error));
+  */  
+    } catch (err) {
+      console.log('Error In storing Pdf:', err);
+    }
 
-                  .then((contents) => {
-                    // log the file contents
-                    //console.log(contents);
-                    //const cadena = "data:application/pdf;base64,"+contents;
-                    */
-              }
-        else
-              {
-                console.log("No se concedió el permiso")
-              }
-        }) //Fin del .then(result => {
+
+
+///****************************FIN INTENTO 9_9_2023 - 9_56 AM
+
+
+
+
+  ///Abrir PDF Local
+
+  //const filePath = RNFS.DocumentDirectoryPath + "/joke.txt";
+  //const filePath = RNFS.readDir(RNFS.DocumentDirectoryPath);
+  //console.log("ruta ->          "+filePath)
+
+
+  //console.log(typeof filePath);
+
+  /*
+  temp = []
+  temp.push(filePath);
+  console.log("temp ->          "+temp.length())
+*/
+
+  
+
+  /*
+  const [fileData, setFileData] = useState();
+
+  const readFile = async (path) => {
+    const response = await RNFS.readFile(path);
+    setFileData(response); //set the value of response to the fileData Hook.
+  };
+  useEffect(() => {
+    readFile(filePath);
+  }, []);
+
+  
+  return (
+    <SafeAreaView>
+      //Display the value
+      //<Text style={styles.name}>{fileData}</Text>
+    //</SafeAreaView>
+  //);
+
+  */
+  //Fin Abrir PDF local
+  
 }
-
-
 
 
   return (
@@ -303,11 +396,7 @@ const pedirpermisoindian = (permiso) => {
             <Text
             //value={name}
             //value="HOLA"
-            > {
-            123
-            //route.params.IDBoleto
-            
-            }</Text>
+            > {route.params.IDBoleto}</Text>
         </View>
 
         <View
@@ -359,6 +448,9 @@ const pedirpermisoindian = (permiso) => {
             //value="HOLA"
             > {celularclie}</Text>
         </View>
+
+
+
         <View
             style={{ 
                 padding: 20,
@@ -388,20 +480,14 @@ const pedirpermisoindian = (permiso) => {
                   >CANCELAR</Text>
             </TouchableOpacity>
 
-          </View>
-
-          <TouchableOpacity
-              onPress={()=>pedirpermisoindian(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)}
+            <TouchableOpacity
+              onPress={()=>mostrarPdf()}
             >
                   <Text
                   style = {{ fontSize: 15, backgroundColor: "yellow" }}
-                  >PERMISO INDIAN</Text>
+                  >MOSTRAR PDF</Text>
             </TouchableOpacity>
-
-            <View>
-              <Text>---</Text>
-            </View>
-
+          </View>
     </View>
   )
 }

@@ -15,7 +15,9 @@ const AfiliarScreen = ({navigation, route}) => {
 
     console.log("route.params.mensaje ->    " + route.params.valorIDBoleto)
     //const response = await fetch('http://192.168.18.10:5000/api/sorteos/',{
-    const response = await fetch('http://192.168.101.20:5000/api/sorteos/',{
+    //const response = await fetch('http://192.168.101.20:5000/api/sorteos/',{
+  
+    const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos',{
           method: 'POST',
           headers: {
               'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
@@ -62,6 +64,13 @@ const AfiliarScreen = ({navigation, route}) => {
     })
 }
 
+/*quizas ya borrar
+const pasarpantalla = () => {
+
+  navigation.navigate('GenerarBoleto')
+
+}
+*/
   return (
     <View>
         <View
@@ -109,7 +118,9 @@ const AfiliarScreen = ({navigation, route}) => {
             <TouchableOpacity
               /* NOTA: cuando usas ()=> console.log("Generando...") refresca la consola inmediatemente
               cuando usas console.log("Generando...") NO refresca la consola*/
-              onPress={()=>guardarcliente(name, apellido, numcelular)}
+              onPress={()=>guardarcliente(name, apellido, numcelular)} ///Usar esto cuando se otorguen los permisos
+              //onPress={()=>pasarpantalla()}
+              
             >
                   <Text
                   style = {{ fontSize: 15, backgroundColor: "yellow" }}

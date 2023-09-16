@@ -14,7 +14,8 @@ const ListadoBoletos = ({ navigation, route }) => {
         
         try {
             //const res = await fetch('http://192.168.18.10:5000/api/sorteos/boletos')
-            const res = await fetch('http://192.168.101.20:5000/api/sorteos/boletos')
+            //const res = await fetch('http://192.168.101.20:5000/api/sorteos/boletos')
+            const res = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/boletos')
             const data = await res.json();
             setBoletos(data)
 

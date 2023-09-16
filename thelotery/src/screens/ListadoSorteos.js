@@ -99,7 +99,7 @@ const ListadoSorteos = ({ navigation, route }) => {
 
 <View  style={{ backgroundColor: '#fff', flex: 1, paddingTop: Platform.OS === "android"? 
 StatusBar.currentHeight: 0 }} >
-    <Text style={styles.heading} >S O R T E O S - 6/9/2023-13:20</Text>
+    <Text style={styles.heading} >S O R T E O S</Text>
     <ScrollView>
         <SafeAreaView >        
         <View

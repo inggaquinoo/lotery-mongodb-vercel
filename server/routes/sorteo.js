@@ -159,11 +159,12 @@ router.get('/boletos',(req, res) => {
 
 //RUTA PARA CREAR TODOS LOS BOLETOS DE UN SORTEO
 // /api/sorteos/crearboletos
-router.get('/crearboletos', (req, res) => {
+router.post('/crearboletos', (req, res) => {
         res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery')
 
         //const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
-    const insertarboletos = boletos.initializeOrderedBulkOp();
+       //var query = modelObj.collection.initializeOrderedBulkOp();
+    const insertarboletos = ModeloBoleto.boletos.initializeOrderedBulkOp();
 
         //for (const i=0; i < cantidadboletos; i++)
         //{

@@ -178,7 +178,18 @@ router.post('/crearboletos', (req, res) => {
             })
         //}
 
-    insertarboletos.execute();
+    insertarboletos.execute()
+        .then(result => {
+            res.send({
+                message: 'xxxxxxxxxxxxxxxxxCliente create successfully - Today September 2023',
+                data: result
+                
+            })
+            console.log("xxxxxxxxxxxxxxonsole --- Cliente create successfully - Today September 2023");
+            //este resultado se ve en la terminal del server (node.js)
+        })
+        //Si tiene ERROR al guardar se ejecuta .catch
+        .catch(err => console.log("xxxxxxxxxxxerror aqui here here->",err))
 
     /*
 

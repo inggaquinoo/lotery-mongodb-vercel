@@ -165,9 +165,9 @@ router.post('/crearboletos', (req, res) => {
         const boleto = new ModeloBoleto({
             cliente_id: "",
             empleado_id: "",
-            sorteo_id: "64dd5e361bb2aab7af059b15",
-            costo: "2",
-            terminos_condiciones: "terminos y condiciones",
+            sorteo_id: req.body.sorteoid,
+            costo: req.body.costo,
+            terminos_condiciones: req.body.terminosycondiciones,
             fecha_compra: "",
             estado_boleto: "",
         });

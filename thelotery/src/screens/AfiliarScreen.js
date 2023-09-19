@@ -17,7 +17,8 @@ const AfiliarScreen = ({navigation, route}) => {
     //const response = await fetch('http://192.168.18.10:5000/api/sorteos/',{
     //const response = await fetch('http://192.168.101.20:5000/api/sorteos/',{
   
-    const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/',{
+    //const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/',{
+      const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/cliente',{
           method: 'POST',
           headers: {
               'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON

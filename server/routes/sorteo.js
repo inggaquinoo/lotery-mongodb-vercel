@@ -159,7 +159,7 @@ router.get('/boletos',(req, res) => {
 
 //RUTA PARA CREAR UN NUEVO CLIENTE
 // /api/sorteos
-router.post('/', (req, res) => {
+router.post('/cliente', (req, res) => {
     
     const cliente = new ModeloCliente({
         nombre: req.body.nombre,

@@ -180,6 +180,8 @@ router.get('/crearboletos', (req, res) => {
     });
 
 */
+
+/*
 const cantidadboletos = req.body.cantidad;
 
     const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
@@ -197,7 +199,7 @@ const cantidadboletos = req.body.cantidad;
 
     insertarboletos.execute();
 
-    
+  */  
 
     //boleto
 

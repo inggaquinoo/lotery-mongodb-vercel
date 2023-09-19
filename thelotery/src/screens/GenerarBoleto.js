@@ -5,47 +5,11 @@ import RNFS from 'react-native-fs';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import Share from 'react-native-share';
 import RNFetchBlob from 'rn-fetch-blob';
-//import * as OpenAnything from "react-native-openanything";
-//import { Base64 } from 'js-base64';
-//import base64 from 'react-native-base64';
   
 const GenerarBoleto = ({navigation, route}) => {
-  //const fs = RNFetchBlob.fs;
-  //const filePath = RNFS.DocumentDirectoryPath + "/joke.txt";
-  //const filePath = RNFS.ExternalStorageDirectoryPath + "/joke.txt";
-  //const [fileData, setFileData] = useState();
-
   
   //route.params.id
   //console.log("route.params ->    " + route.params.IDBoleto)
-
-  //Todo esto borrar
-  /*
-  const sorteo_id = "123";
-  const usuario_id = "123";
-  const descripcionarti = "hola";
-  const costoarti = "99";
-  const nombrecli = "nombre";
-  const apellidocli = "apellido";
-  const celularclie = "celu";
-  const fecha_compra = "2023-08-28";
-  const estado_boleto = "1";
-  */
-
-  //lo que sigue borralo, es solo para que no te de error
-/*
-  const sorteo_id = "route.params.IDSorteo;"
-  const usuario_id = "route.params.IDusuario;"
-  const descripcionarti = "route.params.descripcionarticulos;"
-  const costoarti = "route.params.costoarticulos;"
-  const nombrecli = "route.params.nombrecliente;"
-  const apellidocli = "route.params.apellidocliente;"
-  const celularclie = "route.params.celularcliente;"
-  const fecha_compra = "2023-08-28";
-  const estado_boleto = "1";
-*/
-
-// Liberar desde aqui cuando otorguen los permisos
 
   const sorteo_id = route.params.IDSorteo;
   const usuario_id = route.params.IDusuario;
@@ -58,31 +22,14 @@ const GenerarBoleto = ({navigation, route}) => {
   const estado_boleto = "1";
 
   const GenerarBoletoComprobante = async(usuario_id, fecha_compra, estado_boleto) => {
-    //En este caso _id es el id del boleto
+    /*
     console.log("Comenzando generación de Boleto")
     console.log("IDBoleto ->    "+route.params.IDBoleto);
     console.log("usuario_id ->    "+usuario_id);
     console.log("fecha_compra ->    "+fecha_compra);
     console.log("estado_boleto ->    "+estado_boleto);
+    */
 
-    //console.log("Guardando cliente...")
-    //console.log("Valores ->    " + name + " " + apellido + " " + numcelular)
-    //const response = await fetch(`http://192.168.18.10:5000/api/sorteos/${route.params.IDBoleto}`,{
-    //const response = await fetch(`http://192.168.101.20:5000/api/sorteos/${route.params.IDBoleto}`,{
-
-    const response = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/${route.params.IDBoleto}`,{
-          method: 'PUT',
-          headers: {
-              'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
-          },
-          body: JSON.stringify({
-            usuario_id: usuario_id,
-            fecha_compra: fecha_compra,
-            estado_boleto: estado_boleto
-          })
-      })
-      //const responseData = await response.json();
-      console.log("BOLETO GRABADO EN BASE DE DATOS!!!")
       //DE HTML HACIA PDF
             const html = `
               <html>
@@ -172,8 +119,8 @@ const GenerarBoleto = ({navigation, route}) => {
             };
             const file = await RNHTMLtoPDF.convert(options); //esta línea guarda el boleto en la carpeta del movil
         
-        console.log("PDF GENERADO CON EXITO EN CARPETA DOCUMENTOS")
-        console.log("CARPETA LOTERIA UBICADA EN  ->   "+file.filePath); //en este caso filePath es una
+        //console.log("PDF GENERADO CON EXITO EN CARPETA DOCUMENTOS")
+        //console.log("CARPETA LOTERIA UBICADA EN  ->   "+file.filePath); //en este caso filePath es una
         //propiedad de file
 
         //console.log("RUTA EN FETCHBLOB ++++**++++   ->    "+RNFetchBlob.fs.dirs.DownloadDir)
@@ -181,7 +128,7 @@ const GenerarBoleto = ({navigation, route}) => {
         //console.log("RUTA EN RNFS ++++**++++   ->    "+RNFS.DownloadDirectoryPath) 
         // /storage/emulated/0/Download
         
-        console.log("INICIANDO COPIADO EN CARPETA PERSONALIZADA...")
+        //console.log("INICIANDO COPIADO EN CARPETA PERSONALIZADA...")
         
 
                   const nombrearchivo = route.params.IDBoleto + '-' + route.params.nombrecliente + ' ' + route.params.apellidocliente
@@ -197,9 +144,9 @@ const GenerarBoleto = ({navigation, route}) => {
                   
                   RNFetchBlob.fs.writeFile(filePath, file.base64, 'base64') 
                     .then(response=>{
-                      console.log("Éxito "+response);
-                      console.log("DESDE DONDE COPIA EL ARCHIVO    ->    "+file.filePath) //Desde donde lo copia
-                      console.log("LA COPIA SE GUARDA EN   ->    "+filePath) //En donde lo copia
+                      //console.log("Éxito "+response);
+                      //console.log("DESDE DONDE COPIA EL ARCHIVO    ->    "+file.filePath) //Desde donde lo copia
+                      //console.log("LA COPIA SE GUARDA EN   ->    "+filePath) //En donde lo copia
                       Alert.alert(
                         'Información',
                         'Boleto generado con éxito, desea compartirlo?',
@@ -208,121 +155,17 @@ const GenerarBoleto = ({navigation, route}) => {
                           {text: 'No', onPress: () => regresarainicio(), style: 'cancel'},
                         ],
                         { 
-                          cancelable: false //cuando toca fuera de la pantalla desaparece el control
+                          cancelable: false //cuando toca fuera de la pantalla NO desaparece el control
                         }
                       );
-                    /*
-                      request(permiso)
-                        .then(result => {
-                        console.log(result)
-                        if (result === 'granted')
-                              {
-                              console.log("USANDO R N F S ")
-                                  //RNFS.readFile('file:///storage/emulated/0/Download/abc.pdf', 'base64') //Esta ruta funciona y arroja la cadena larga con base64
-                                  //RNFS.readFile(RNFS.DownloadDirectoryPath+'/abc.pdf', 'base64')// /storage/emulated/0/Download
-                                  //declaro nombrearchivo2 para que obtenga de nuevo el nombre del archivo
-                                  //const nombrearchivo2 = route.params.IDBoleto + '-' + route.params.nombrecliente + ' ' + route.params.apellidocliente
-                                  RNFS.readFile(RNFS.DownloadDirectoryPath+'/Loteria/'+nombrearchivo+'.pdf', 'base64')// /storage/emulated/0/Download
-                                  
-                                  //Se le asigna la ruta 'file:///storage/emulated/0/Download/'
-                                  //porque aqui va a buscar el archivo pdf para luego enviarlo por whatsapp
-                                  //digamos que es una ruta aceptada (en donde lee por lo menos PDFs)
-                                  
-                                      .then(res => {
-                                      console.log(res)
-                                      //Preparando la cadena para enviar a url para compartir en Whatsapp
-                                      const cadena = "data:application/pdf;base64,"+res;
-
-                                            ///////////INICIANDO COMPARTIR CON WHATSAPP
-                                            const shareOptions = {
-                                              message: 'Hola Tavo te esta enviando un mensaje de prueba',
-                                              social: Share.Social.WHATSAPP,
-                                              url: cadena,
-                                              whatsAppNumber: "51963815050",  // country code + phone number
-                                              //filename: 'abc.pdf' , // filename es opcional, only for base64 file in Android
-                                              };
-                                                try {
-                                                  //const ShareResponse = Share.open(shareOptions)
-                                                  const ShareResponse = Share.shareSingle(shareOptions)
-                                                  console.log(JSON.stringify(ShareResponse))
-                                                  console.log("Share response      "+ShareResponse)
-                                                }catch (error) {
-                                                    console.log("error ->   "+error)
-                                                }
-                                                // para cuando envies directo a whatsapp
-                                                //Share.shareSingle(shareOptions)
-                                                //  .then((res) => { console.log(res) })
-                                                //  .catch((err) => { err && console.log(err); });
-
-                                      })
-                                      //Si en caso hay errores al leer el archivo
-                                      .catch(err => {
-                                        console.log(err.message, err.code);
-                                      });
-                                  }
-                                  else
-                                  {
-                                    console.log("No se concedió el permiso")
-                                  }
-                              })
-                          .catch(err => {//Si en caso da error con el permiso
-                             console.log(err.message, err.code);
-                          });
-                       */         
-                  
-
+                    
 
                        })//si en caso da error al copiar el archivo en la carpeta Donwload
                          .catch(errors=>{
-                           console.log("Error "+errors);
+                           //console.log("Error "+errors);
                        });
-
-                  /*
-                  console.log("USANDO R N F S ")
-                      //RNFS.readFile('file:///storage/emulated/0/Download/abc.pdf', 'base64') //Esta ruta funciona y arroja la cadena larga con base64
-                      //RNFS.readFile(RNFS.DownloadDirectoryPath+'/abc.pdf', 'base64')// /storage/emulated/0/Download
-                      //declaro nombrearchivo2 para que obtenga de nuevo el nombre del archivo
-                      const nombrearchivo2 = route.params.IDBoleto + '-' + route.params.nombrecliente + ' ' + route.params.apellidocliente
-                      RNFS.readFile(RNFS.DownloadDirectoryPath+'/Loteria/'+nombrearchivo2+'.pdf', 'base64')// /storage/emulated/0/Download
-                      
-                      //Se le asigna la ruta 'file:///storage/emulated/0/Download/'
-                      //porque aqui va a buscar el archivo pdf para luego enviarlo por whatsapp
-                      //digamos que es una ruta aceptada (en donde lee por lo menos PDFs)
-                      
-                      .then(res => {
-                      console.log(res)
-                      //Preparando la cadena para enviar a url para compartir en Whatsapp
-                      const cadena = "data:application/pdf;base64,"+res;
-
-                            ///////////INICIANDO COMPARTIR CON WHATSAPP
-                            const shareOptions = {
-                              message: 'Hola Tavo te esta enviando un mensaje de prueba',
-                              social: Share.Social.WHATSAPP,
-                              url: cadena,
-                              whatsAppNumber: "51963815050",  // country code + phone number
-                              //filename: 'abc.pdf' , // filename es opcional, only for base64 file in Android
-                              };
-                                try {
-                                  //const ShareResponse = Share.open(shareOptions)
-                                  const ShareResponse = Share.shareSingle(shareOptions)
-                                  console.log(JSON.stringify(ShareResponse))
-                                  console.log("Share response      "+ShareResponse)
-                                }catch (error) {
-                                    console.log("error ->   "+error)
-                                }
-                                // para cuando envies directo a whatsapp
-                                //Share.shareSingle(shareOptions)
-                                //  .then((res) => { console.log(res) })
-                                //  .catch((err) => { err && console.log(err); });
-
-                      })
-                      //Si en caso hay errores al leer el archivo
-                      .catch(err => {
-                        console.log(err.message, err.code);
-                      });
-                    */
+                  
 }
-//Liberar desde aqui cuando otorguen los permisos
 
 const regresarainicio = () => {
   navigation.navigate('ListadoSorteos');
@@ -331,20 +174,19 @@ const regresarainicio = () => {
 const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
       request(permiso)
       .then(result => {
-        console.log(result)
+        //console.log(result)
         if (result === 'granted')
               {
-                console.log("AQUI IRIA LA PARTE DE ACCEDER AL ARCHIVO")
+                //console.log("AQUI IRIA LA PARTE DE ACCEDER AL ARCHIVO")
 
                   ///NOTAS IMPORTANTES
                   //RNFS.ExternalDirectoryPath -> cada uno de estas extensiones despues de RNFS apunta
                   //hacia lugares distintos en el móvil y todos no leen los archivos PDF ni word!!!
                   
-                      console.log("USANDO R N F S ")
+                      //console.log("USANDO R N F S ")
                       //RNFS.readFile('file:///storage/emulated/0/Download/abc.pdf', 'base64') //Esta ruta funciona y arroja la cadena larga con base64
                       //RNFS.readFile(RNFS.DownloadDirectoryPath+'/abc.pdf', 'base64')// /storage/emulated/0/Download
 
-                      //const nombrearchivo2 = route.params.IDBoleto + '-' + route.params.nombrecliente + ' ' + route.params.apellidocliente
                       RNFS.readFile(RNFS.DownloadDirectoryPath+'/Loteria/'+nombrearchivooriginal+'.pdf', 'base64')// /storage/emulated/0/Download
                       
                       //Se le asigna la ruta 'file:///storage/emulated/0/Download/'
@@ -352,7 +194,7 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
                       //digamos que es una ruta aceptada (en donde lee por lo menos PDFs)
                       
                       .then(res => {
-                      console.log(res)
+                      //console.log(res)
                       //Preparando la cadena para enviar a url para compartir en Whatsapp
                       const cadena = "data:application/pdf;base64,"+res;
 
@@ -361,39 +203,32 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
                               message: 'Envio de comprobante de Lotería',
                               social: Share.Social.WHATSAPP,
                               url: cadena,
-                              whatsAppNumber: "51963815088",  // country code + phone number
+                              whatsAppNumber: "51999666111",  // country code + phone number
                               //filename: 'abc.pdf' , // filename es opcional, only for base64 file in Android
                               };
                                 try {
                                   //const ShareResponse = Share.open(shareOptions)
                                   const ShareResponse = Share.shareSingle(shareOptions)
-                                  console.log(JSON.stringify(ShareResponse))
-                                  console.log("Share response      "+ShareResponse)
+                                  //console.log(JSON.stringify(ShareResponse))
+                                  //console.log("Share response      "+ShareResponse)
                                 }catch (error) {
-                                    console.log("error ->   "+error)
+                                    //console.log("error ->   "+error)
                                 }
-                                // para cuando envies directo a whatsapp
-                                //Share.shareSingle(shareOptions)
-                                //  .then((res) => { console.log(res) })
-                                //  .catch((err) => { err && console.log(err); });
                       
                       navigation.navigate('ListadoSorteos'); //regresa a la pantalla sorteos
                       })
                       //Si en caso hay errores al leer el archivo
                       .catch(err => {
-                        console.log(err.message, err.code);
+                        //console.log(err.message, err.code);
                       });
     
               }
         else
               {
-                console.log("No se concedió el permiso")
+                //console.log("No se concedió el permiso")
               }
-        }) //Fin del .then(result => {
+        })
 }
-
-
-
 
   return (
     <View>
@@ -402,8 +237,6 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         >
             <Text>SORTEO:</Text>
             <Text
-            //value={sorteo_id}
-            //value="HOLA"
             > {sorteo_id}</Text>
         </View>
 
@@ -412,13 +245,7 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         >
             <Text>BOLETO:</Text>
             <Text
-            //value={name}
-            //value="HOLA"
-            > {
-            123
-            //route.params.IDBoleto
-            
-            }</Text>
+            > {route.params.IDBoleto}</Text>
         </View>
 
         <View
@@ -426,8 +253,6 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         >
             <Text>DESCRIPCION:</Text>
             <Text
-            //value={name}
-            //value="HOLA"
             > {descripcionarti}</Text>
         </View>
 
@@ -436,8 +261,6 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         >
             <Text>COSTO:</Text>
             <Text
-            //value={name}
-            //value="HOLA"
             > US$ {costoarti}</Text>
         </View>
 
@@ -446,8 +269,6 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         >
             <Text>NOMBRE:</Text>
             <Text
-            //value={name}
-            //value="HOLA"
             > {nombrecli}</Text>
         </View>
 
@@ -456,8 +277,6 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         >
             <Text>APELLIDOS:</Text>
             <Text
-            //value={name}
-            //value="HOLA"
             > {apellidocli}</Text>
         </View>
 
@@ -466,8 +285,6 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         >
             <Text>CELULAR:</Text>
             <Text
-            //value={name}
-            //value="HOLA"
             > {celularclie}</Text>
         </View>
         <View
@@ -494,27 +311,12 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
                   style = {{ fontSize: 15, backgroundColor: "yellow" }}
                   >CANCELAR</Text>
             </TouchableOpacity>
-
           </View>
-
-          <TouchableOpacity
-              onPress={()=>compartirWhatsApp(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)}
-            >
-                  <Text
-                  style = {{ fontSize: 15, backgroundColor: "yellow" }}
-                  >COMPARTIR</Text>
-            </TouchableOpacity>
-
-            <View>
-              <Text>---</Text>
-            </View>
-
     </View>
   )
 }
 
 export default GenerarBoleto;
-
 
 const Styles = StyleSheet.create({
 

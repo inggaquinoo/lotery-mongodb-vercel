@@ -13,7 +13,7 @@ const AfiliarScreen = ({navigation, route}) => {
     //console.log("Guardando cliente...")
     //console.log("Valores ->    " + name + " " + apellido + " " + numcelular)
 
-    console.log("route.params.mensaje ->    " + route.params.valorIDBoleto)
+    //console.log("route.params.mensaje ->    " + route.params.valorIDBoleto)
     //const response = await fetch('http://192.168.18.10:5000/api/sorteos/',{
     //const response = await fetch('http://192.168.101.20:5000/api/sorteos/',{
   
@@ -35,12 +35,25 @@ const AfiliarScreen = ({navigation, route}) => {
       //const IDusuario = responseData.data._id
       //console.log("ID del nuevo cliente:      "+responseData.data._id)
 
-      /* -----Gran dato!------ cuando el responseData que en realidad es la respuesta tiene
+      /* -----Gran dato!------ el responseData (que en realidad es la respuesta) tiene
       un campo que se llama "data" (lo puedes ver en el console.log) y accediendo
       a data puedes acceder a cualquier campo, inclusive si el registro recién ha sido
       insertado o actualizado. Genial!!!
       */
-
+      const responsegeneral = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/${route.params.valorIDBoleto}`,{
+        method: 'PUT',
+        headers: {
+            'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
+        },
+        body: JSON.stringify({
+          usuario_id: responseData.data._id,
+          fecha_compra: "2023-08-28",
+          estado_boleto: "1"
+        })
+      })
+      const responseDataGeneral = await responsegeneral.json();
+      //console.log("responseData:      "+responseDataGeneral)
+      //console.log("BOLETO GRABADO EN BASE DE DATOS!!!")
       
       //GenerarBoleto = hacia donde va
       navigation.navigate('GenerarBoleto',{
@@ -64,14 +77,7 @@ const AfiliarScreen = ({navigation, route}) => {
     })
 }
 
-/*quizas ya borrar
-const pasarpantalla = () => {
-
-  navigation.navigate('GenerarBoleto')
-
-}
-*/
-  return (
+ return (
     <View>
         <View
           style={Styles.datospares}
@@ -120,7 +126,6 @@ const pasarpantalla = () => {
               cuando usas console.log("Generando...") NO refresca la consola*/
               onPress={()=>guardarcliente(name, apellido, numcelular)} ///Usar esto cuando se otorguen los permisos
               //onPress={()=>pasarpantalla()}
-              
             >
                   <Text
                   style = {{ fontSize: 15, backgroundColor: "yellow" }}

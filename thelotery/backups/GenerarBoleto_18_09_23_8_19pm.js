@@ -82,96 +82,100 @@ const GenerarBoleto = ({navigation, route}) => {
           })
       })
       //const responseData = await response.json();
+      
+
       console.log("BOLETO GRABADO EN BASE DE DATOS!!!")
+
       //DE HTML HACIA PDF
-            const html = `
-              <html>
-                <head>
-                  <style>
-                    body {
-                      font-family: 'Helvetica';
-                      font-size: 12px;
-                    }
-                    header, footer {
-                      height: 50px;
-                      background-color: #fff;
-                      color: #000;
-                      display: flex;
-                      justify-content: center;
-                      padding: 0 20px;
-                    }
-                    table {
-                      width: 100%;
-                      border-collapse: collapse;
-                    }
-                    th, td {
-                      border: 1px solid #000;
-                      padding: 5px;
-                    }
-                    th {
-                      background-color: #ccc;
-                    }
-                  </style>
-                </head>
-                <body>
-                  <header>
-                    <h1>Lotería "Nueva Lotería"</h1>
-                  </header>
-                  <h1>Información Importante:</h1>
-                  <table>
-                    <tr>
-                      <th>SORTEO</th>
-                      <td>${sorteo_id}</td> 
-                    </tr>
-                    <tr>
-                      <th>BOLETO</th>
-                      <td>${route.params.IDBoleto}</td>
-                    </tr>
-                    <tr>
-                      <th>PREMIOS</th>
-                      <td>${descripcionarti}</td>
-                    </tr>
-                    <tr>
-                      <th>COSTO</th>
-                      <td>${costoarti}</td>
-                    </tr>
-                    <tr>
-                      <th>NOMBRES</th>
-                      <td>${nombrecli}</td>
-                    </tr>
-                    <tr>
-                      <th>APELLIDOS</th>
-                      <td>${apellidocli}</td>
-                    </tr>
-                    <tr>
-                      <th>CELULAR</th>
-                      <td>${celularclie}</td>
-                    </tr>
-                    <tr>
-                      <th>FECHA DE COMPRA</th>
-                      <td>${fecha_compra}</td>
-                    </tr>
-                    <tr>
-                      <th>TERMINOS Y CONDICIONES</th>
-                      <td>terminos y condiciones</td>
-                    </tr>
-                  </table>
-                  <footer>
-                    <p>Gracias por participar. Suerte!</p>
-                  </footer>
-                </body>
-              </html>
-            `;
-            const options = {
-              html,
-              fileName: `${route.params.IDBoleto}-${route.params.nombrecliente} ${route.params.apellidocliente}`,
-              //directory: la ruta predeterminada y que no se puede cambiar es Documents dentro de la memoria
-              //interna del móvil
-              directory: 'Loteria',
-              base64: true,
-            };
-            const file = await RNHTMLtoPDF.convert(options); //esta línea guarda el boleto en la carpeta del movil
-        
+
+      try {
+        const html = `
+          <html>
+            <head>
+              <style>
+                body {
+                  font-family: 'Helvetica';
+                  font-size: 12px;
+                }
+                header, footer {
+                  height: 50px;
+                  background-color: #fff;
+                  color: #000;
+                  display: flex;
+                  justify-content: center;
+                  padding: 0 20px;
+                }
+                table {
+                  width: 100%;
+                  border-collapse: collapse;
+                }
+                th, td {
+                  border: 1px solid #000;
+                  padding: 5px;
+                }
+                th {
+                  background-color: #ccc;
+                }
+              </style>
+            </head>
+            <body>
+              <header>
+                <h1>Lotería "Nueva Lotería"</h1>
+              </header>
+              <h1>Información Importante:</h1>
+              <table>
+                <tr>
+                  <th>SORTEO</th>
+                  <td>${sorteo_id}</td> 
+                </tr>
+                <tr>
+                  <th>BOLETO</th>
+                  <td>${route.params.IDBoleto}</td>
+                </tr>
+                <tr>
+                  <th>PREMIOS</th>
+                  <td>${descripcionarti}</td>
+                </tr>
+                <tr>
+                  <th>COSTO</th>
+                  <td>${costoarti}</td>
+                </tr>
+                <tr>
+                  <th>NOMBRES</th>
+                  <td>${nombrecli}</td>
+                </tr>
+                <tr>
+                  <th>APELLIDOS</th>
+                  <td>${apellidocli}</td>
+                </tr>
+                <tr>
+                  <th>CELULAR</th>
+                  <td>${celularclie}</td>
+                </tr>
+                <tr>
+                  <th>FECHA DE COMPRA</th>
+                  <td>${fecha_compra}</td>
+                </tr>
+                <tr>
+                  <th>TERMINOS Y CONDICIONES</th>
+                  <td>terminos y condiciones</td>
+                </tr>
+              </table>
+              <footer>
+                <p>Gracias por participar. Suerte!</p>
+              </footer>
+            </body>
+          </html>
+        `;
+        const options = {
+          html,
+          fileName: `${route.params.IDBoleto}-${route.params.nombrecliente} ${route.params.apellidocliente}`,
+          //directory: la ruta predeterminada y que no se puede cambiar es Documents dentro de la memoria
+          //interna del móvil
+          directory: 'Loteria',
+          base64: true,
+        };
+        const file = await RNHTMLtoPDF.convert(options); //esta línea guarda el boleto en la carpeta del movil
         console.log("PDF GENERADO CON EXITO EN CARPETA DOCUMENTOS")
         console.log("CARPETA LOTERIA UBICADA EN  ->   "+file.filePath); //en este caso filePath es una
         //propiedad de file
@@ -193,8 +197,6 @@ const GenerarBoleto = ({navigation, route}) => {
                   //RNFetchBlob.fs.writeFile(filePath, file.base64, 'base64')  -> hace una copia del archivo
                   //ubicado en 'Documents' y la copia la pega en el diretorio que tú elijas 
                   //en este caso es en la ruta: filePath = RNFetchBlob.fs.dirs.DownloadDir + '/xxx.pdf';
-                  
-                  
                   RNFetchBlob.fs.writeFile(filePath, file.base64, 'base64') 
                     .then(response=>{
                       console.log("Éxito "+response);
@@ -211,6 +213,9 @@ const GenerarBoleto = ({navigation, route}) => {
                           cancelable: false //cuando toca fuera de la pantalla desaparece el control
                         }
                       );
+
+
+                      
                     /*
                       request(permiso)
                         .then(result => {
@@ -277,6 +282,14 @@ const GenerarBoleto = ({navigation, route}) => {
                            console.log("Error "+errors);
                        });
 
+
+                    
+
+                  
+                  
+                  
+                  
+
                   /*
                   console.log("USANDO R N F S ")
                       //RNFS.readFile('file:///storage/emulated/0/Download/abc.pdf', 'base64') //Esta ruta funciona y arroja la cadena larga con base64
@@ -321,6 +334,14 @@ const GenerarBoleto = ({navigation, route}) => {
                         console.log(err.message, err.code);
                       });
                     */
+            
+          
+      } 
+      catch (error) { //error si en caso algo no sale bien con la generacion del PDF
+        //Alert.alert(error);
+        console.log("Error al generar PDF ->     "+error)
+      }
+      //navigation.navigate('ListadoSorteos')
 }
 //Liberar desde aqui cuando otorguen los permisos
 
@@ -361,7 +382,7 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
                               message: 'Envio de comprobante de Lotería',
                               social: Share.Social.WHATSAPP,
                               url: cadena,
-                              whatsAppNumber: "51963815088",  // country code + phone number
+                              whatsAppNumber: "51963815050",  // country code + phone number
                               //filename: 'abc.pdf' , // filename es opcional, only for base64 file in Android
                               };
                                 try {

@@ -160,7 +160,32 @@ router.get('/boletos',(req, res) => {
 //RUTA PARA CREAR TODOS LOS BOLETOS DE UN SORTEO
 // /api/sorteos/crearboletos
 router.post('/crearboletos', (req, res) => {
-        res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery')
+        //res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery')
+
+        const boleto = new ModeloBoleto({
+            cliente_id: "",
+            empleado_id: "",
+            sorteo_id: "64dd5e361bb2aab7af059b15",
+            costo: "2",
+            terminos_condiciones: "terminos y condiciones",
+            fecha_compra: "",
+            estado_boleto: "",
+        });
+
+
+        boleto.save() //Aquí sucede el guardar los datos en la BD Mongo
+        //Si tiene éxito al guardar se ejecuta .then
+        .then(result => {
+            res.send({
+                message: 'Tickett create successfully - Today September 2023',
+                data: result
+                
+            })
+            console.log("Console --- Ticket create successfully - Today September 2023");
+            //este resultado se ve en la terminal del server (node.js)
+        })
+        //Si tiene ERROR al guardar se ejecuta .catch
+        .catch(err => console.log("error aqui here here->",err))
     
 
 

@@ -1,7 +1,8 @@
 const express = require('express')
 const ModeloSorteo = require('../models/file')
 const ModeloBoleto = require('../models/boleto')
-const ModeloUsuario = require('../models/usuario')
+const ModeloCliente = require('../models/cliente')
+const ModeloEmpleado = require('../models/empleado')
 const router = express.Router()
 
 const mongoose = require('mongoose')
@@ -156,17 +157,54 @@ router.get('/boletos',(req, res) => {
 });
 
 
-//RUTA PARA CREAR UN NUEVO USUARIO
+//RUTA PARA CREAR UN NUEVO CLIENTE
 // /api/sorteos
 router.post('/', (req, res) => {
     
-    const usuario = new ModeloUsuario({
+    const cliente = new ModeloCliente({
+        nombre: req.body.nombre,
+        apellidos: req.body.apellidos,
+        numero_celular: req.body.numero_celular,
+    });
+
+/*
+    const comprobante = new ModeloComprobante({
+        serieprincipal: req.body.serieprincipal,
+        usuario: req.body.usuario,
+        articulo: req.body.articulo,
+    });
+
+*/
+
+    cliente.save() //Aquí sucede el guardar los datos en la BD Mongo
+        //Si tiene éxito al guardar se ejecuta .then
+        .then(result => {
+            res.send({
+                message: 'Cliente create successfully - Today September 2023',
+                data: result
+                
+            })
+            console.log("Console --- Cliente create successfully - Today September 2023");
+            //este resultado se ve en la terminal del server (node.js)
+        })
+        //Si tiene ERROR al guardar se ejecuta .catch
+        .catch(err => console.log("error aqui here here->",err))
+
+});
+
+
+//RUTA PARA CREAR UN NUEVO EMPLEADO
+// /api/sorteos
+router.post('/', (req, res) => {
+    
+    const empleado = new ModeloEmpleado({
         nombre: req.body.nombre,
         apellidos: req.body.apellidos,
         numero_celular: req.body.numero_celular,
         tipo_usuario: req.body.tipo_usuario,
         usuario: req.body.usuario,
         clave: req.body.clave,
+        estado_empleado: req.body.clave,
     });
 
 
@@ -179,15 +217,15 @@ router.post('/', (req, res) => {
 
 */
 
-    usuario.save() //Aquí sucede el guardar los datos en la BD Mongo
+  empleado.save() //Aquí sucede el guardar los datos en la BD Mongo
         //Si tiene éxito al guardar se ejecuta .then
         .then(result => {
             res.send({
-                message: 'Usuario create successfully - Today August 2023',
+                message: 'Employee create successfully - Today September 2023',
                 data: result
                 
             })
-            console.log("Console --- Usuario create successfully - Today August 2023");
+            console.log("Console --- Employee create successfully - Today September 2023");
             //este resultado se ve en la terminal del server (node.js)
         })
         //Si tiene ERROR al guardar se ejecuta .catch
@@ -208,7 +246,8 @@ router.put('/:id', (req, res) => {
         .then(boleto => {
 
             //Solo necesito actualizar estos campos:
-            boleto.usuario_id = req.body.usuario_id;
+            boleto.cliente_id = req.body.cliente_id;
+            boleto.empleado_id = req.body.empleado_id;
             boleto.fecha_compra = req.body.fecha_compra;
             boleto.estado_boleto = req.body.estado_boleto;
 

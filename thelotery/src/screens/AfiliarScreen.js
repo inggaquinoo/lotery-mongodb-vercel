@@ -17,7 +17,7 @@ const AfiliarScreen = ({navigation, route}) => {
     //const response = await fetch('http://192.168.18.10:5000/api/sorteos/',{
     //const response = await fetch('http://192.168.101.20:5000/api/sorteos/',{
   
-    const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos',{
+    const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/',{
           method: 'POST',
           headers: {
               'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
@@ -25,15 +25,13 @@ const AfiliarScreen = ({navigation, route}) => {
           body: JSON.stringify({
             nombre: name,
             apellidos: apellido,
-            numero_celular: numcelular,
-            tipo_usuario: "cliente",
-            usuario: "",
-            clave: ""
+            numero_celular: numcelular
           })
       })
       const responseData = await response.json();
       //const IDusuario = responseData.data._id
-      //console.log("ID del nuevo cliente:      "+responseData.data._id)
+      console.log("responseData:      "+responseData)
+      console.log("ID del nuevo cliente:      "+responseData.data._id)
 
       /* -----Gran dato!------ el responseData (que en realidad es la respuesta) tiene
       un campo que se llama "data" (lo puedes ver en el console.log) y accediendo
@@ -46,12 +44,13 @@ const AfiliarScreen = ({navigation, route}) => {
             'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
         },
         body: JSON.stringify({
-          usuario_id: responseData.data._id,
+          cliente_id: responseData.data._id,
+          empleado_id: "6509c3920c3a856a831fbc6e", //debería venir de la sesión de inicio
           fecha_compra: "2023-08-28",
           estado_boleto: "1"
         })
       })
-      const responseDataGeneral = await responsegeneral.json();
+      //const responseDataGeneral = await responsegeneral.json(); //no se usan los resultados
       //console.log("responseData:      "+responseDataGeneral)
       //console.log("BOLETO GRABADO EN BASE DE DATOS!!!")
       

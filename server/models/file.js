@@ -42,11 +42,13 @@ const EschemaComprobante = new mongoose.Schema({
     articulo: { type: mongoose.ObjectId, require: true }
 })
 */
+////ESQUEMA DE LA COLEECTION SORTEO
 
 const EschemaSorteo = new mongoose.Schema({
     fecha_sorteo: { type: Date, require: true },
     lugar: { type: String, require: true },
-    estado: {type: String, require: true}
+    estado: {type: String, require: true},
+    descripcion_articulos: {type: String, require: true}
 })
 //articulo: { type: Array, require: true },
 

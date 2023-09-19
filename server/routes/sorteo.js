@@ -162,10 +162,11 @@ router.get('/boletos',(req, res) => {
 router.post('/crearboletos', (req, res) => {
         //res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery')
 
-        const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
+        //const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
+        const insertarboletos = boletos.initializeOrderedBulkOp();
 
-        for (const i=0; i < cantidadboletos; i++)
-        {
+        //for (const i=0; i < cantidadboletos; i++)
+        //{
             insertarboletos.insert({
                 cliente_id: "",
                 empleado_id: "",
@@ -175,7 +176,7 @@ router.post('/crearboletos', (req, res) => {
                 fecha_compra: "",
                 estado_boleto: "",
             })
-        }
+        //}
 
     insertarboletos.execute();
 

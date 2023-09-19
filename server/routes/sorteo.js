@@ -157,6 +157,50 @@ router.get('/boletos',(req, res) => {
 });
 
 
+//RUTA PARA CREAR TODOS LOS BOLETOS DE UN SORTEO
+// /api/sorteos/crearboletos
+router.post('/crearboletos', (req, res) => {
+    
+/*
+    const boleto = new ModeloBoleto({
+        cliente_id: "",
+        empleado_id: "",
+        sorteo_id: "64dd5e361bb2aab7af059b15",
+        costo: "2",
+        terminos_condiciones: "terminos y condiciones",
+        fecha_compra: "",
+        estado_boleto: "",
+    });
+
+*/
+
+
+    const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
+    
+
+    const cantidadboletos = 3;
+    for (const i=0; i < cantidadboletos; i++)
+        {
+            insertarboletos.insert({
+                sorteo_id: "64dd5e361bb2aab7af059b15",
+            })
+        }
+
+        
+
+    insertarboletos.execute();
+
+    
+
+    //boleto
+
+    //db.collection.initializeOrderedBulkOp()
+
+});
+
+
+
+
 //RUTA PARA CREAR UN NUEVO CLIENTE
 // /api/sorteos
 router.post('/cliente', (req, res) => {

@@ -4,6 +4,7 @@ import ListadoBoletos from '../screens/ListadoBoletos';
 import ListadoSorteos from '../screens/ListadoSorteos';
 import AfiliarScreen from '../screens/AfiliarScreen';
 import GenerarBoleto from '../screens/GenerarBoleto';
+import HabilitarNuevoSorteo from '../screens/HabilitarNuevoSorteo';
 
 
 
@@ -13,10 +14,12 @@ const Navigator = () => {
     return (
         // headerShown: false -> oculta el encabezado de arriba del stack
         <Stack.Navigator  screenOptions={{ headerShown: true } } >
+            <Stack.Screen name="HabilitarNuevoSorteo"  component={HabilitarNuevoSorteo} />
             <Stack.Screen name="ListadoSorteos"  options={{ title: "Lotery App" }} component={ListadoSorteos} />
             <Stack.Screen name="ListadoBoletos"  component={ListadoBoletos} />
             <Stack.Screen name="AfiliarScreen"  component={AfiliarScreen} />
             <Stack.Screen name="GenerarBoleto"  component={GenerarBoleto} />
+            
             
         </Stack.Navigator>
   )

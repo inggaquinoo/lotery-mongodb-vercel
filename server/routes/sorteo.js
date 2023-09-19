@@ -164,11 +164,11 @@ router.post('/crearboletos', (req, res) => {
 
         //const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
        //var query = modelObj.collection.initializeOrderedBulkOp();
-    const insertarboletos = ModeloBoleto.boletos.initializeOrderedBulkOp();
+    const bulk = ModeloBoleto.boletos.initializeOrderedBulkOp();
 
         //for (const i=0; i < cantidadboletos; i++)
         //{
-            insertarboletos.insert({
+            bulk.insert({
                 cliente_id: "",
                 empleado_id: "",
                 sorteo_id: "64dd5e361bb2aab7af059b15",
@@ -179,7 +179,7 @@ router.post('/crearboletos', (req, res) => {
             })
         //}
 
-    insertarboletos.execute()
+        bulk.execute()
         .then(result => {
             res.send({
                 message: 'xxxxxxxxxxxxxxxxxCliente create successfully - Today September 2023',

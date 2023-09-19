@@ -162,6 +162,19 @@ router.get('/boletos',(req, res) => {
 router.post('/crearboletos', (req, res) => {
         //res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery')
 
+        const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
+
+        for (const i=0; i < cantidadboletos; i++)
+        {
+            insertarboletos.insert({
+                sorteo_id: "64dd5e361bb2aab7af059b15",
+            })
+        }
+
+    insertarboletos.execute();
+
+    /*
+
         const boleto = new ModeloBoleto({
             cliente_id: "",
             empleado_id: "",
@@ -186,46 +199,7 @@ router.post('/crearboletos', (req, res) => {
         })
         //Si tiene ERROR al guardar se ejecuta .catch
         .catch(err => console.log("error aqui here here->",err))
-    
-
-
-/*
-    const boleto = new ModeloBoleto({
-        cliente_id: "",
-        empleado_id: "",
-        sorteo_id: "64dd5e361bb2aab7af059b15",
-        costo: "2",
-        terminos_condiciones: "terminos y condiciones",
-        fecha_compra: "",
-        estado_boleto: "",
-    });
-
-*/
-
-/*
-const cantidadboletos = req.body.cantidad;
-
-    const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
-    
-
-  
-    for (const i=0; i < cantidadboletos; i++)
-        {
-            insertarboletos.insert({
-                sorteo_id: "64dd5e361bb2aab7af059b15",
-            })
-        }
-
-        
-
-    insertarboletos.execute();
-
-  */  
-
-    //boleto
-
-    //db.collection.initializeOrderedBulkOp()
-
+    */
 });
 
 

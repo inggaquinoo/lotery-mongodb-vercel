@@ -169,7 +169,11 @@ crearboletos();
    async function crearboletos() {
             try {
             
-            var cantidad = req.body.cantidad;
+            var cantidad = 2;
+
+            var localsorteoid = req.body.sorteoid;
+            var localcosto = req.body.costo;
+            var localterminosycondiciones = req.body.terminosycondiciones;
         
             for (var i=0; i < cantidad; i++)
             {
@@ -177,9 +181,9 @@ crearboletos();
                     {
                         cliente_id: " ",
                         empleado_id: " ",
-                        sorteo_id: req.body.sorteoid,
-                        costo: req.body.costo,
-                        terminos_condiciones: req.body.terminosycondiciones,
+                        sorteo_id: localsorteoid,
+                        costo: localcosto,
+                        terminos_condiciones: localterminosycondiciones,
                         fecha_compra: " ",
                         estado_boleto: " ",
                     }

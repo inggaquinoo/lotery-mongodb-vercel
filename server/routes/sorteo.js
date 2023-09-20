@@ -169,11 +169,16 @@ crearboletos();
    async function crearboletos() {
         //try {
             
-            var cantidad = 2;
+            var cantidad = boletosCantidad;
 
+            /*
             var localsorteoid = req.body.sorteoid;
             var localcosto = req.body.costo;
             var localterminosycondiciones = req.body.terminosycondiciones;
+            */
+            var localsorteoid = "64dd5e361bb2aab7af059b15";
+            var localcosto = 3;
+            var localterminosycondiciones = "terminosycondiciones";
         
                     for (var i=0; i < cantidad; i++)
                     {
@@ -203,6 +208,11 @@ crearboletos();
          ModeloBoleto.collection.drop();
        }
         */
+
+       //////////NOTA 
+       //EVALUA EL COMPORTAMIENTO CON POSTMAN Y MAS IMPORTANTE CON EL APP
+       //AL PARECER DEMORA EN GRABAR EN LA BASE DE DATOS
+       //MUY BIEN!!!
         
 });
 

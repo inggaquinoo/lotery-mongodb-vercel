@@ -1,8 +1,34 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
 
 const HabilitarNuevoSorteo = () => {
+
+const [cantidadboletos, setCantidadBoletos] = useState('');
+
+    const generarboletos = async(cantidadboletos) =>{
+
+            const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearboletos',{
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
+                },
+                body: JSON.stringify({
+                    //sorteoID: "64dd5e361bb2aab7af059b15",
+                    //costointerno: 3,
+                    //terminosycondicionesinterno: "terminosycondiciones",
+                    boletosCantidad: cantidadboletos
+                })
+            })
+            const responseData = await response.json();
+            //const IDusuario = responseData.data._id
+            console.log("responseData:      "+responseData)
+            console.log("ID del nuevo cliente:      "+responseData.data._id)
+
+            Alert.alert("Boletos generados correctamente")
+
+    }
+
     return (
         <View>
             <View
@@ -59,9 +85,9 @@ const HabilitarNuevoSorteo = () => {
                 <Text>Cantidad de boletos:</Text>
                 <TextInput
                 style={Styles.input}
-                placeholder='Ingrese Celular'
+                placeholder='Ingrese Cantidad'
                 keyboardType="numeric"
-                onChangeText={(value) => setNumcelular(value)}
+                onChangeText={(value) => setCantidadBoletos(value)}
                 >
                 </TextInput>
             </View>
@@ -91,12 +117,12 @@ const HabilitarNuevoSorteo = () => {
                 <TouchableOpacity
                   /* NOTA: cuando usas ()=> console.log("Generando...") refresca la consola inmediatemente
                   cuando usas console.log("Generando...") NO refresca la consola*/
-                  onPress={()=>guardarcliente(name, apellido, numcelular)} ///Usar esto cuando se otorguen los permisos
+                  onPress={()=>generarboletos(cantidadboletos)} ///Usar esto cuando se otorguen los permisos
                   //onPress={()=>pasarpantalla()}
                 >
                       <Text
                       style = {{ fontSize: 15, backgroundColor: "yellow" }}
-                      >GUARDAR</Text>
+                      >GENERAR BOLETOS</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={()=>console.log("Cancelando...")}

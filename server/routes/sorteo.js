@@ -160,7 +160,7 @@ router.get('/boletos',(req, res) => {
 //RUTA PARA CREAR TODOS LOS BOLETOS DE UN SORTEO
 // /api/sorteos/crearboletos
 router.post('/crearboletos', (req, res) => {
-        res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST - INSERTAR BOLETOS MASIVO')
+res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST - INSERTAR BOLETOS MASIVO')
 
 //borrarcoleecionboletos()
 crearboletos();
@@ -177,43 +177,32 @@ crearboletos();
         
             for (var i=0; i < cantidad; i++)
             {
-               ModeloBoleto.collection.insertMany([
-                    {
-                        cliente_id: " ",
-                        empleado_id: " ",
-                        sorteo_id: localsorteoid,
-                        costo: localcosto,
-                        terminos_condiciones: localterminosycondiciones,
-                        fecha_compra: " ",
-                        estado_boleto: " ",
-                    }
-                ])
-                
-                .then(result => {
-                    res.send({
-                        message: 'Ticket create successfully - Today September 2023',
-                        data: result
-                        
-                    })
-                    //console.log("Console --- Cliente create successfully - Today September 2023");
-                    //este resultado se ve en la terminal del server (node.js)
-                })
-                //Si tiene ERROR al guardar se ejecuta .catch
-                .catch(err => console.log("error aqui here here->",err))
+                ModeloBoleto.collection.insertMany([
+                        {
+                            cliente_id: " ",
+                            empleado_id: " ",
+                            sorteo_id: localsorteoid,
+                            costo: localcosto,
+                            terminos_condiciones: localterminosycondiciones,
+                            fecha_compra: " ",
+                            estado_boleto: " ",
+                        }
+                    ])
+            }//fin del for
 
-            }
-        
-             await console.log(cantidad+' boletos creados satisfactoriamente');
+            await res.end('BOLETOS INSERTADOS SATISFACTORIAMENTE')
+             console.log(cantidad+' boletos creados satisfactoriamente');
              console.log(BulkWriteResult.insertedCount)
             } catch (error) {
               console.log("Error al insertar boletos, el error es ->>  "+error);
             }
           }
 
+          /*
    function borrarcoleecionboletos(){
          ModeloBoleto.collection.drop();
        }
-        
+        */
         
 });
 

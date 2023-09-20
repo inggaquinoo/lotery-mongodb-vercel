@@ -188,6 +188,19 @@ crearboletos();
                         estado_boleto: " ",
                     }
                 ])
+                
+                .then(result => {
+                    res.send({
+                        message: 'Ticket create successfully - Today September 2023',
+                        data: result
+                        
+                    })
+                    //console.log("Console --- Cliente create successfully - Today September 2023");
+                    //este resultado se ve en la terminal del server (node.js)
+                })
+                //Si tiene ERROR al guardar se ejecuta .catch
+                .catch(err => console.log("error aqui here here->",err))
+
             }
         
              await console.log(cantidad+' boletos creados satisfactoriamente');

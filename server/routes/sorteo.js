@@ -160,7 +160,7 @@ router.get('/boletos',(req, res) => {
 //RUTA PARA CREAR TODOS LOS BOLETOS DE UN SORTEO
 // /api/sorteos/crearboletos
 router.post('/crearboletos', (req, res) => {
-res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST - INSERTAR BOLETOS MASIVO')
+//res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST - INSERTAR BOLETOS MASIVO')
 
 //borrarcoleecionboletos()
 crearboletos();
@@ -190,8 +190,8 @@ crearboletos();
                     ])
             }//fin del for
 
-            await res.end('BOLETOS INSERTADOS SATISFACTORIAMENTE')
-             console.log(cantidad+' boletos creados satisfactoriamente');
+            res.end('BOLETOS INSERTADOS SATISFACTORIAMENTE')
+            await console.log(cantidad+' boletos creados satisfactoriamente');
              console.log(BulkWriteResult.insertedCount)
             } catch (error) {
               console.log("Error al insertar boletos, el error es ->>  "+error);

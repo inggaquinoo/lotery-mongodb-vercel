@@ -162,7 +162,7 @@ router.get('/boletos',(req, res) => {
 //router.post('/crearboletos', (req, res) => { //ruta antigua
 router.put('/crearboletos/:id', (req, res) => {
 //res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST - INSERTAR BOLETOS MASIVO')
-
+res.end('ESTAS EN LA RUTA PARA CREAR LOS BOLETOS')
 //borrarcoleecionboletos()
 crearboletos();
 

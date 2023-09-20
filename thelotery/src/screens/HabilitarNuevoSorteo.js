@@ -7,23 +7,20 @@ const HabilitarNuevoSorteo = () => {
 const [cantidadboletos, setCantidadBoletos] = useState('');
 
     const generarboletos = async(cantidadboletos) =>{
-
+        console.log("cantidadboletos:      "+cantidadboletos)
             const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearboletos',{
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
                 },
                 body: JSON.stringify({
-                    //sorteoID: "64dd5e361bb2aab7af059b15",
-                    //costointerno: 3,
-                    //terminosycondicionesinterno: "terminosycondiciones",
                     boletosCantidad: cantidadboletos
                 })
             })
             const responseData = await response.json();
             //const IDusuario = responseData.data._id
             console.log("responseData:      "+responseData)
-            console.log("ID del nuevo cliente:      "+responseData.data._id)
+            //console.log("ID del nuevo cliente:      "+responseData.data._id)
 
             Alert.alert("Boletos generados correctamente")
 

@@ -169,7 +169,7 @@ crearboletos();
    async function crearboletos() {
         //try {
             
-            var cantidad = boletosCantidad;
+            var cantidad = req.body.boletosCantidad;
 
             /*
             var localsorteoid = req.body.sorteoid;

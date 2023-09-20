@@ -162,63 +162,42 @@ router.get('/boletos',(req, res) => {
 router.post('/crearboletos', (req, res) => {
         res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST')
 
-        //const insertarboletos = ModeloBoleto.initializeOrderedBulkOp();
-       //var query = modelObj.collection.initializeOrderedBulkOp();
-    const bulk = ModeloBoleto.boletos.initializeOrderedBulkOp();
-
-        //for (const i=0; i < cantidadboletos; i++)
-        //{
-            bulk.insert({
-                cliente_id: "",
-                empleado_id: "",
-                sorteo_id: "64dd5e361bb2aab7af059b15",
-                costo: "req.body.costo",
-                terminos_condiciones: "req.body.terminosycondiciones",
-                fecha_compra: "",
-                estado_boleto: "",
-            })
-        //}
-
-        bulk.execute()
-        .then(result => {
-            res.send({
-                message: 'xxxxxxxxxxxxxxxxxCliente create successfully - Today September 2023',
-                data: result
-                
-            })
-            console.log("xxxxxxxxxxxxxxonsole --- Cliente create successfully - Today September 2023");
-            //este resultado se ve en la terminal del server (node.js)
-        })
-        //Si tiene ERROR al guardar se ejecuta .catch
-        .catch(err => console.log("xxxxxxxxxxxerror aqui here here->",err))
-
-    /*
-
-        const boleto = new ModeloBoleto({
-            cliente_id: "",
-            empleado_id: "",
-            sorteo_id: req.body.sorteoid,
-            costo: req.body.costo,
-            terminos_condiciones: req.body.terminosycondiciones,
-            fecha_compra: "",
-            estado_boleto: "",
-        });
+//borrarcoleecionboletos()
+crearboletos();
 
 
-        boleto.save() //Aquí sucede el guardar los datos en la BD Mongo
-        //Si tiene éxito al guardar se ejecuta .then
-        .then(result => {
-            res.send({
-                message: 'Tickett create successfully - Today September 2023',
-                data: result
-                
-            })
-            console.log("Console --- Ticket create successfully - Today September 2023");
-            //este resultado se ve en la terminal del server (node.js)
-        })
-        //Si tiene ERROR al guardar se ejecuta .catch
-        .catch(err => console.log("error aqui here here->",err))
-    */
+   async function crearboletos() {
+            try {
+            
+            var cantidad = 1;
+        
+            for (var i=0; i < cantidad; i++)
+            {
+               ModeloBoleto.collection.insertMany([
+                    {
+                        cliente_id: " ",
+                        empleado_id: " ",
+                        sorteo_id: "64dd5e361bb2aab7af059b15",
+                        costo: 2,
+                        terminos_condiciones: "TERMINOS Y CONDICIONES",
+                        fecha_compra: " ",
+                        estado_boleto: " ",
+                    }
+                ])
+            }
+        
+             await console.log(cantidad+' boletos creados satisfactoriamente');
+             console.log(BulkWriteResult.insertedCount)
+            } catch (error) {
+              console.log("Error al insertar boletos, el error es ->>  "+error);
+            }
+          }
+
+   function borrarcoleecionboletos(){
+         ModeloBoleto.collection.drop();
+       }
+        
+        
 });
 
 

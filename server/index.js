@@ -1,3 +1,8 @@
+///este borrar
+//const ModeloBoleto = require('../server/models/boleto');
+//const mongoose = require('mongoose');
+//
+
 const express = require('express');
 const app = express();
 //Importar conexion MongoDB
@@ -12,10 +17,12 @@ const cors = require('cors');
 //a poder correr el programa en un puerto especifico 
 require('dotenv').config();
 
+
 //Importar body-parser
 //Esta extension "body-parser" permite obtener
 //la información de los campos del formulario
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const { insertMany } = require('./models/file');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: 'true'}))
 
@@ -61,9 +68,44 @@ const port = process.env.PORT || 7000;
 //Este mensaje se muestra en la consola
 app.listen(port, function(){
     console.log(`El servidor NODE SÍ esta corriendo correctamente en el puerto:${port}`);
-})
+});
+    
+/*
 
 
+function borrarcoleecionboletos(){
+
+    ModeloBoleto.collection.drop();
+
+}
+
+async function crearboletos() {
+    try {
+    
+    var cantidad = 1;
+
+    for (var i=0; i < cantidad; i++)
+    {
+       ModeloBoleto.collection.insertMany([
+            {
+                cliente_id: " ",
+                empleado_id: " ",
+                sorteo_id: "64dd5e361bb2aab7af059b15",
+                costo: 2,
+                terminos_condiciones: "TERMINOS Y CONDICIONES",
+                fecha_compra: " ",
+                estado_boleto: " ",
+            }
+        ])
+    }
+
+     await console.log(cantidad+' boletos creados satisfactoriamente');
+    } catch (error) {
+      console.log("Error al insertar boletos, el error es ->>  "+error);
+    }
+  }
+
+*/
 
 /*
 ----------ORDEN DE LOS PASOS QUE RECOORE EL NODE PARA GENERAR LA CONEXION A LA BD -------------

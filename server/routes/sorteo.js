@@ -167,7 +167,7 @@ crearboletos();
 
 
    async function crearboletos() {
-            try {
+        //try {
             
             var cantidad = 2;
 
@@ -175,28 +175,28 @@ crearboletos();
             var localcosto = req.body.costo;
             var localterminosycondiciones = req.body.terminosycondiciones;
         
-            for (var i=0; i < cantidad; i++)
-            {
-                ModeloBoleto.collection.insertMany([
-                        {
-                            cliente_id: " ",
-                            empleado_id: " ",
-                            sorteo_id: localsorteoid,
-                            costo: localcosto,
-                            terminos_condiciones: localterminosycondiciones,
-                            fecha_compra: " ",
-                            estado_boleto: " ",
-                        }
-                    ])
-            }//fin del for
+                    for (var i=0; i < cantidad; i++)
+                    {
+                        ModeloBoleto.collection.insertMany([
+                                {
+                                    cliente_id: " ",
+                                    empleado_id: " ",
+                                    sorteo_id: localsorteoid,
+                                    costo: localcosto,
+                                    terminos_condiciones: localterminosycondiciones,
+                                    fecha_compra: " ",
+                                    estado_boleto: " ",
+                                }
+                            ])
+                    }//fin del for
 
-            res.end('BOLETOS INSERTADOS SATISFACTORIAMENTE')
-            await console.log(cantidad+' boletos creados satisfactoriamente');
-             console.log(BulkWriteResult.insertedCount)
-            } catch (error) {
-              console.log("Error al insertar boletos, el error es ->>  "+error);
-            }
-          }
+                    res.end('BOLETOS INSERTADOS SATISFACTORIAMENTE')
+                    await console.log(cantidad+' boletos creados satisfactoriamente');
+         //           console.log(BulkWriteResult.insertedCount)
+         //           } catch (error) {
+         //           console.log("Error al insertar boletos, el error es ->>  "+error);
+         //           }
+            }//Fin de la funcion crearboletos
 
           /*
    function borrarcoleecionboletos(){

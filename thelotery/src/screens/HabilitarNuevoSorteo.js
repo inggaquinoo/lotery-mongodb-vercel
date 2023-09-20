@@ -8,14 +8,16 @@ const [cantidadboletos, setCantidadBoletos] = useState('');
 
     const generarboletos = async(cantidadboletos) =>{
         console.log("cantidadboletos:      "+cantidadboletos)
-            const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearboletos',{
-                method: 'POST',
+            const response = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearboletos/${cantidadboletos}`,{
+                method: 'PUT',
                 headers: {
                     'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
                 },
+                /*
                 body: JSON.stringify({
                     boletosCantidad: cantidadboletos
                 })
+                */
             })
             const responseData = await response.json();
             //const IDusuario = responseData.data._id

@@ -160,7 +160,7 @@ router.get('/boletos',(req, res) => {
 //RUTA PARA CREAR TODOS LOS BOLETOS DE UN SORTEO
 // /api/sorteos/crearboletos
 router.post('/crearboletos', (req, res) => {
-        res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST')
+        res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST - INSERTAR BOLETOS MASIVO')
 
 //borrarcoleecionboletos()
 crearboletos();

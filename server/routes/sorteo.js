@@ -221,7 +221,7 @@ router.put('/crearboletos/:id', (req, res) => { //:id, en este caso 'id' es lo q
                                      costo: localcosto,
                                      terminos_condiciones: localterminosycondiciones,
                                      fecha_compra: " ",
-                                     estado_boleto: " ",
+                                     estado_boleto: 0,
                                  }
                              ])
                     }//fin del for

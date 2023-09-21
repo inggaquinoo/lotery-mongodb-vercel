@@ -10,8 +10,8 @@ const NuevoSorteo = ({navigation, route}) => {
     const generarsorteo = async(fechaSorteo,lugarSorteo,descArti) =>{
         
         try {
-                const responsesorteo = await fetch('http://192.168.101.20:5000/api/sorteos/crearsorteo',{    
-                //const responsesorteo = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearsorteo',{    
+                //const responsesorteo = await fetch('http://192.168.101.20:5000/api/sorteos/crearsorteo',{    
+                const responsesorteo = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearsorteo',{    
                   method: 'POST',
                   headers: {
                       'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON

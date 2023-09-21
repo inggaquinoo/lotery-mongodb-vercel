@@ -9,8 +9,8 @@ const NuevoBoleto = ({navigation, route}) => {
 
    const generarboletos = async(cantidadBoletos,costo,sorteo_id) =>{
         try {
-            //const response = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearboletos/${cantidadBoletos}`,{    
-            const response = await fetch(`http://192.168.101.20:5000/api/sorteos/crearboletos/${cantidadBoletos}`,{    
+            const response = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearboletos/${cantidadBoletos}`,{    
+            //const response = await fetch(`http://192.168.101.20:5000/api/sorteos/crearboletos/${cantidadBoletos}`,{    
                     method: 'PUT',
                     headers: {
                         'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
@@ -29,8 +29,8 @@ const NuevoBoleto = ({navigation, route}) => {
             console.log("El error es: " + error);
         }   
         
-        //const responseconsuboletos = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/consultarboletos')    
-        const responseconsuboletos = await fetch('http://192.168.101.20:5000/api/sorteos/consultarboletos')
+        const responseconsuboletos = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/consultarboletos')    
+        //const responseconsuboletos = await fetch('http://192.168.101.20:5000/api/sorteos/consultarboletos')
         const dataBoletos = await responseconsuboletos.json();
         Alert.alert(dataBoletos.messagetotalboleinsertados+" Boletos generados correctamente")
                

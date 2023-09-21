@@ -217,7 +217,7 @@ router.put('/crearboletos/:id', (req, res) => { //:id, en este caso 'id' es lo q
                                  {
                                      cliente_id: " ",
                                      empleado_id: " ",
-                                     sorteo_id: "650baaeecbdfe980814b559d",
+                                     sorteo_id: localsorteoid,
                                      costo: localcosto,
                                      terminos_condiciones: localterminosycondiciones,
                                      fecha_compra: " ",

@@ -154,6 +154,22 @@ StatusBar.currentHeight: 0 }} >
             }
              
         </View>
+                <View>
+                    <Text></Text>
+                </View>
+                <View>
+                    <Text>TEMPORAL ACCESOS DE ADMINISTRADOR</Text>
+                </View>
+
+                <View>
+                    <TouchableOpacity
+                      onPress={()=>navigation.navigate('NuevoSorteo')}
+                    >
+                          <Text
+                          style = {{ fontSize: 15, backgroundColor: "yellow" }}
+                          >ADMINISTRADOR</Text>
+                    </TouchableOpacity>
+                 </View>
         </SafeAreaView>
     </ScrollView>
 </View>

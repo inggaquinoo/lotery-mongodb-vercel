@@ -246,7 +246,7 @@ router.post('/crearsorteo', (req, res) => {
     const sorteo = new ModeloSorteo({
         fecha_sorteo: req.body.fecha_sorteoFrEnd,
         lugar: req.body.lugarFrEnd ,
-        estado_sorteo: 1,
+        estado_sorteo: 0,
         descripcion_articulos: req.body.descripcion_articulosFrEnd,
     });
 

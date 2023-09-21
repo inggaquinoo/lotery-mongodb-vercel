@@ -205,7 +205,7 @@ router.put('/crearboletos/:id', (req, res) => { //:id, en este caso 'id' es lo q
     crearboletos();
     function crearboletos() {
              var cantidad = req.params.id;
-             var localsorteoid = req.body.sorteoid;
+             const localsorteoid = req.body.sorteoid;
              var localcosto = req.body.costoFrEnd;
              var localterminosycondiciones = "TERMINOS Y CONDICIONES SETIEMBRE 2023";
 

@@ -205,7 +205,7 @@ router.put('/crearboletos/:id', (req, res) => { //:id, en este caso 'id' es lo q
     crearboletos();
     function crearboletos() {
              var cantidad = req.params.id;
-             const localsorteoid = req.body.sorteoid;
+             var localsorteoid = req.body.sorteoid;
              var localcosto = req.body.costoFrEnd;
              var localterminosycondiciones = "TERMINOS Y CONDICIONES SETIEMBRE 2023";
 
@@ -217,7 +217,7 @@ router.put('/crearboletos/:id', (req, res) => { //:id, en este caso 'id' es lo q
                                  {
                                      cliente_id: " ",
                                      empleado_id: " ",
-                                     sorteo_id: localsorteoid,
+                                     sorteo_id: "650baaeecbdfe980814b559d",
                                      costo: localcosto,
                                      terminos_condiciones: localterminosycondiciones,
                                      fecha_compra: " ",

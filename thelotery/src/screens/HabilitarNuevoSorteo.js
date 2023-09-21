@@ -9,14 +9,10 @@ const [lugarSorteo, setLugarSorteo] = useState('');
 const [descArti, setDescArti] = useState('');
 const [cantidadBoletos, setCantidadBoletos] = useState('');
 const [costo, setCosto] = useState('');
-const [idsorteo, setIdSorteo] = useState('');
 
-
-    
     const generarboletos = async(cantidadBoletos,fechaSorteo,lugarSorteo,descArti,costo) =>{
     
     try {
-
         //const responsesorteo = await fetch('http://192.168.101.20:5000/api/sorteos/crearsorteo',{    
         const responsesorteo = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/crearsorteo',{    
           method: 'POST',
@@ -33,11 +29,9 @@ const [idsorteo, setIdSorteo] = useState('');
       //const IDusuario = responseData.data._id
       //console.log("responseData:      "+responseData)
       console.log("ID del nuevo sorteo:      "+responseData.data._id) //ID del nuevo sorteo creado
-      setIdSorteo(responseData.data._id);
     } catch (error) {
         console.log("El error en sorteo es: " + error);
     }
-    
     
     console.log("INSERTANDO BOLETOS AHORA ");
     try {
@@ -48,7 +42,7 @@ const [idsorteo, setIdSorteo] = useState('');
                     'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
                 },
                 body: JSON.stringify({
-                    sorteoid: idsorteo,
+                    sorteoid: responseData.data._id,
                     costoFrEnd: costo,
                 })
             })
@@ -59,8 +53,8 @@ const [idsorteo, setIdSorteo] = useState('');
             //data no se lee porque no devuelve ningun dato
     } catch (error) {
         console.log("El error es: " + error);
-    }
-
+    }   
+    
     const responseconsuboletos = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/consultarboletos')    
     //const responseconsuboletos = await fetch('http://192.168.101.20:5000/api/sorteos/consultarboletos')
     const dataBoletos = await responseconsuboletos.json();

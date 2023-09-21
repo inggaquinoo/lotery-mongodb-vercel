@@ -68,16 +68,20 @@ const port = process.env.PORT || 7000;
 //Este mensaje se muestra en la consola
 app.listen(port, function(){
     console.log(`El servidor NODE SÍ esta corriendo correctamente en el puerto:${port}`);
-});
-    
-/*
 
+    //crearboletos();
+    
+
+/*
 
 function borrarcoleecionboletos(){
 
     ModeloBoleto.collection.drop();
 
 }
+*/
+
+/*
 
 async function crearboletos() {
     try {
@@ -104,9 +108,10 @@ async function crearboletos() {
       console.log("Error al insertar boletos, el error es ->>  "+error);
     }
   }
-
 */
 
+
+});
 /*
 ----------ORDEN DE LOS PASOS QUE RECOORE EL NODE PARA GENERAR LA CONEXION A LA BD -------------
 

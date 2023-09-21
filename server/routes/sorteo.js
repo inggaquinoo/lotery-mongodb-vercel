@@ -157,71 +157,120 @@ router.get('/boletos',(req, res) => {
 });
 
 
-//RUTA PARA CREAR TODOS LOS BOLETOS DE UN SORTEO
-// /api/sorteos/crearboletos
-//router.post('/crearboletos', (req, res) => { //ruta antigua
-router.put('/crearboletos/:id', (req, res) => {
-//res.end('ESTAS EN RUTA PARA CREAR VARIOS BOLETOS DE Lotery - GET/POST - INSERTAR BOLETOS MASIVO')
-res.end('ESTAS EN LA RUTA PARA CREAR LOS BOLETOS')
-//borrarcoleecionboletos()
-crearboletos();
+//RUTA PARA CONSULTAR / LEER TODOS LOS BOLETOS
+// /api/sorteos/consultarboletos
+router.get('/consultarboletos',(req, res) => {
+    contarboletos();
+        async function contarboletos() {
+                try {
+                  const totalboletos = await ModeloBoleto.collection.estimatedDocumentCount();
+                  //const estimateB = await ModeloBoleto.collection.countDocuments(); //esta funciona
+                  //console.log(`Total documentos en la coleccion "boletos": ${totalboletos}`);
+                  //console.log(`Estimated number of documents in the boletos collection 'countDocuments': ${estimateB}`);
+                  // Query for movies from Canada.
+                        //const query = { countries: "Canada" };
+                  // Find the number of documents that match the specified
+                  // query, (i.e. with "Canada" as a value in the "countries" field)
+                  // and print out the count.
+                        //const countCanada = await movies.countDocuments(query);
+                        //console.log(`Number of movies from Canada: ${countCanada}`);
+                        //Este bloque de código es para enviar un msje de vuelta con messagetotalboleinsertados: totalboletos,
+                        ModeloBoleto.collection.estimatedDocumentCount()
+                        .then(result => {
+                            res.send({ //con PUT no regresa ninguna respuesta, mejor usa res.end(), 
+                                        //cuidado res.end y res.send no pueden estar en el mismo
+                                        //bloque de codigo o juntos
+                                messagetotalboleinsertados: totalboletos,
+                                //data: result
+                            })
+                        })
+                        .catch(err => console.log("Error es: ",err))
+                        
+                } catch (error) {
+                    console.log("Error al contar todos los boletos, el error es ->>  "+error);
+                } 
+            }
+});
 
 
-   async function crearboletos() {
-        //try {
-            
-            var cantidad = req.params.id;
+//RUTA PARA GENERAR TODOS LOS BOLETOS DE UN SORTEO
+//router.put('/crearboletos/:id', (req, res) => {
+router.put('/crearboletos/:id', (req, res) => { //:id, en este caso 'id' es lo que llega y para obtener el dato
+                                                //colocas req.params.id. 'id' puede ser cualquier letra(s)
+                                                //los ':' dos puntos siempre van adelante de las letras
+    const boletoID = req.params.id;
+    console.log("req.params.id ->    " + req.params.id)
+    console.log("req.body.sorteoid ->    " + req.body.sorteoid)
 
-            /*
-            var localsorteoid = req.body.sorteoid;
-            var localcosto = req.body.costo;
-            var localterminosycondiciones = req.body.terminosycondiciones;
-            */
-            var localsorteoid = "64dd5e361bb2aab7af059b15";
-            var localcosto = 3;
-            var localterminosycondiciones = "terminosycondiciones";
-        
+    crearboletos();
+    function crearboletos() {
+             var cantidad = req.params.id;
+             var localsorteoid = req.body.sorteoid;
+             var localcosto = req.body.costoFrEnd;
+             var localterminosycondiciones = "TERMINOS Y CONDICIONES SETIEMBRE 2023";
+
+             console.log("localsorteoid   "+localsorteoid)
+                     
                     for (var i=0; i < cantidad; i++)
-                    {
+                     {
                         ModeloBoleto.collection.insertMany([
-                                {
-                                    cliente_id: " ",
-                                    empleado_id: " ",
-                                    sorteo_id: localsorteoid,
-                                    costo: localcosto,
-                                    terminos_condiciones: localterminosycondiciones,
-                                    fecha_compra: " ",
-                                    estado_boleto: " ",
-                                }
-                            ])
+                                 {
+                                     cliente_id: " ",
+                                     empleado_id: " ",
+                                     sorteo_id: localsorteoid,
+                                     costo: localcosto,
+                                     terminos_condiciones: localterminosycondiciones,
+                                     fecha_compra: " ",
+                                     estado_boleto: " ",
+                                 }
+                             ])
                     }//fin del for
+             }//Fin de la funcion crearboletos
+                    //IMPORTANTÍSIMO: siempre que uses PUT y POST debes devolver una respuesta. 
+                    //Prueba tambien con GET.
+                     //con PUT no regresa ninguna respuesta, mejor usa res.end(), 
+                    //cuidado res.end y res.send no pueden estar en el mismo
+                    //bloque de codigo ó juntos. 
+                    //res.send tiene su forma para retornar el dato, así: 
+                    //res.send({message: 'Hola'})
+             res.send({ 
+                    messageconfirmacion: 'Boletos creados satisfactoriamente',
+                })
+});
 
-                    res.end('BOLETOS INSERTADOS SATISFACTORIAMENTE')
-                    await console.log(cantidad+' boletos creados satisfactoriamente');
-         //           console.log(BulkWriteResult.insertedCount)
-         //           } catch (error) {
-         //           console.log("Error al insertar boletos, el error es ->>  "+error);
-         //           }
-            }//Fin de la funcion crearboletos
 
-          /*
-   function borrarcoleecionboletos(){
-         ModeloBoleto.collection.drop();
-       }
-        */
+//RUTA PARA CREAR UN NUEVO SORTEO
+// /api/sorteos/cliente
+router.post('/crearsorteo', (req, res) => {
+    
+    const sorteo = new ModeloSorteo({
+        fecha_sorteo: req.body.fecha_sorteoFrEnd,
+        lugar: req.body.lugarFrEnd ,
+        estado_sorteo: 1,
+        descripcion_articulos: req.body.descripcion_articulosFrEnd,
+    });
 
-       //////////NOTA 
-       //EVALUA EL COMPORTAMIENTO CON POSTMAN Y MAS IMPORTANTE CON EL APP
-       //AL PARECER DEMORA EN GRABAR EN LA BASE DE DATOS
-       //MUY BIEN!!!
-        
+    sorteo.save() //Aquí sucede el guardar los datos en la BD Mongo
+        //Si tiene éxito al guardar se ejecuta .then
+        .then(result => {
+            res.send({ //con PUT no regresa ninguna respuesta, mejor usa res.end(), 
+                        //cuidado res.end y res.send no pueden estar en el mismo
+                        //bloque de codigo o juntos
+                message: 'Sorteo create successfully - Today September 2023',
+                data: result
+            })
+            console.log("Console --- Sorteo create successfully - Today September 2023");
+            //este resultado se ve en la terminal del server (node.js)
+        })
+        //Si tiene ERROR al guardar se ejecuta .catch
+        .catch(err => console.log("error aqui here here->",err))
 });
 
 
 
 
 //RUTA PARA CREAR UN NUEVO CLIENTE
-// /api/sorteos
+// /api/sorteos/cliente
 router.post('/cliente', (req, res) => {
     
     const cliente = new ModeloCliente({
@@ -242,7 +291,9 @@ router.post('/cliente', (req, res) => {
     cliente.save() //Aquí sucede el guardar los datos en la BD Mongo
         //Si tiene éxito al guardar se ejecuta .then
         .then(result => {
-            res.send({
+            res.send({ //con PUT no regresa ninguna respuesta, mejor usa res.end(), 
+                        //cuidado res.end y res.send no pueden estar en el mismo
+                        //bloque de codigo o juntos
                 message: 'Cliente create successfully - Today September 2023',
                 data: result
                 

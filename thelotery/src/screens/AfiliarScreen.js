@@ -38,6 +38,8 @@ const AfiliarScreen = ({navigation, route}) => {
       un campo que se llama "data" (lo puedes ver en el console.log) y accediendo
       a data puedes acceder a cualquier campo, inclusive si el registro recién ha sido
       insertado o actualizado. Genial!!!
+      En este caso data._id devolverá el id del cliente, es decir lo que en base de datos esta como '_id'
+      Es decir data contiene los datos de los campos de la base de datos
       */
       const responsegeneral = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/${route.params.valorIDBoleto}`,{
         method: 'PUT',

@@ -36,7 +36,6 @@ const ListadoSorteos = ({ navigation, route }) => {
     const obtenerSorteos = async() => {
         
         try {
-            //const res = await fetch('http://192.168.18.10:5000/api/sorteos')
             //const res = await fetch('http://192.168.101.20:5000/api/sorteos')
             const res = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos')
             const data = await res.json();

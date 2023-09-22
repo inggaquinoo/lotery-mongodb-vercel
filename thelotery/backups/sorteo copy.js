@@ -1,6 +1,6 @@
 const express = require('express')
-const ModeloSorteo = require('../models/file')
-const ModeloBoleto = require('../models/boleto')
+const ModeloSorteo = require('../../server/models/file')
+const ModeloBoleto = require('../../server/models/boleto')
 const router = express.Router()
 
 const mongoose = require('mongoose')

@@ -203,7 +203,7 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
                               message: 'Envio de comprobante de Lotería',
                               social: Share.Social.WHATSAPP,
                               url: cadena,
-                              whatsAppNumber: "51999666111",  // country code + phone number
+                              //whatsAppNumber: "51999666111",  // country code + phone number
                               //filename: 'abc.pdf' , // filename es opcional, only for base64 file in Android
                               };
                                 try {

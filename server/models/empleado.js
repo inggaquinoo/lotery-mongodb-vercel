@@ -8,6 +8,6 @@ const EschemaEmpleado = new mongoose.Schema({
     usuario: { type: String, require: false },
     clave: { type: String, require: false },
     estado_empleado: { type: String, require: false }
-})
+},{versionKey:false})
 
 module.exports = mongoose.model('empleados',EschemaEmpleado)

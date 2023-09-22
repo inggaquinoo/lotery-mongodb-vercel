@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
-const Mixed = mongoose.Schema.Types.Mixed;
+//const Mixed = mongoose.Schema.Types.Mixed;
 
 const EschemaBoleto = new mongoose.Schema({
     cliente_id: { type: String, require: false },
@@ -10,7 +10,7 @@ const EschemaBoleto = new mongoose.Schema({
     terminos_condiciones: { type: String, require: true },
     fecha_compra: { type: Date, require: false },
     estado_boleto: { type: String, require: true }
-})
+},{versionKey:false})
 
 module.exports = mongoose.model('boletos',EschemaBoleto)
 

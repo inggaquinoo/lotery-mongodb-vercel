@@ -7,6 +7,7 @@ const router = express.Router()
 
 const mongoose = require('mongoose')
 const schema = mongoose.Schema
+var ObjectId = mongoose.Types.ObjectId //Permite generar el tipo de dato ObjectId para que se inserte en la BD
 
 ////////////////////////////////////////////////////////
 // comprobante.js ES EL ARCHIVO DE TODAS LAS RUTAS PARA 
@@ -215,15 +216,15 @@ router.put('/crearboletos/:id', (req, res) => { //:id, en este caso 'id' es lo q
                      {
                         ModeloBoleto.collection.insertMany([
                                  {
-                                     cliente_id: " ",
-                                     empleado_id: " ",
-                                     sorteo_id: localsorteoid,
+                                     cliente_id: "",
+                                     empleado_id: "",
+                                     sorteo_id: new ObjectId(localsorteoid),
                                      costo: localcosto,
                                      terminos_condiciones: localterminosycondiciones,
-                                     fecha_compra: " ",
+                                     fecha_compra: "",
                                      estado_boleto: "0",
                                  }
-                             ])
+                                ])
                     }//fin del for
              }//Fin de la funcion crearboletos
                     //IMPORTANTÍSIMO: siempre que uses PUT y POST debes devolver una respuesta. 
@@ -242,7 +243,6 @@ router.put('/crearboletos/:id', (req, res) => { //:id, en este caso 'id' es lo q
 //RUTA PARA CREAR UN NUEVO SORTEO
 // /api/sorteos/cliente
 router.post('/crearsorteo', (req, res) => {
-    
     const sorteo = new ModeloSorteo({
         fecha_sorteo: req.body.fecha_sorteoFrEnd,
         lugar: req.body.lugarFrEnd ,
@@ -267,8 +267,6 @@ router.post('/crearsorteo', (req, res) => {
 });
 
 
-
-
 //RUTA PARA CREAR UN NUEVO CLIENTE
 // /api/sorteos/cliente
 router.post('/cliente', (req, res) => {
@@ -278,15 +276,6 @@ router.post('/cliente', (req, res) => {
         apellidos: req.body.apellidos,
         numero_celular: req.body.numero_celular,
     });
-
-/*
-    const comprobante = new ModeloComprobante({
-        serieprincipal: req.body.serieprincipal,
-        usuario: req.body.usuario,
-        articulo: req.body.articulo,
-    });
-
-*/
 
     cliente.save() //Aquí sucede el guardar los datos en la BD Mongo
         //Si tiene éxito al guardar se ejecuta .then
@@ -320,16 +309,6 @@ router.post('/', (req, res) => {
         clave: req.body.clave,
         estado_empleado: req.body.clave,
     });
-
-
-/*
-    const comprobante = new ModeloComprobante({
-        serieprincipal: req.body.serieprincipal,
-        usuario: req.body.usuario,
-        articulo: req.body.articulo,
-    });
-
-*/
 
   empleado.save() //Aquí sucede el guardar los datos en la BD Mongo
         //Si tiene éxito al guardar se ejecuta .then

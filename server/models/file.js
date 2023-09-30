@@ -48,7 +48,8 @@ const EschemaSorteo = new mongoose.Schema({
     fecha_sorteo: { type: Date, require: true },
     lugar: { type: String, require: true },
     estado_sorteo: {type: String, require: true},
-    descripcion_articulos: {type: String, require: true}
+    descripcion_articulos: {type: String, require: true},
+    terminos_condiciones: { type: String, require: true },
 },{versionKey:false})
 //articulo: { type: Array, require: true },
 

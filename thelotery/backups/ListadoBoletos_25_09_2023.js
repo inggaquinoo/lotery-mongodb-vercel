@@ -3,29 +3,45 @@ import { View, Text, SafeAreaView, Platform, StatusBar, StyleSheet, TouchableOpa
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const ListadoBoletos = ({ navigation, route }) => {
+  
+    console.log("valor ->     " + route.params.valorIDsorteo)
     const [boletos, setBoletos] = useState([])
+    
+    //ejemplo para probar API con fetch
+    //https://pokeapi.co/api/v2/pokemon/ditto
+    
     const obtenerBoletos = async() => {
         
-        try {//Encontramos los boletos que pertenecen a determinado talonario
-            const response = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/buscarboletos/${route.params.idtalonario}`,{
-            //const response = await fetch(`http://192.168.101.20:5000/api/sorteos/buscarboletos/${route.params.idtalonario}`,{
-                method: 'PUT',
-                headers: {
-                    'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
-                },
-            })
-                const responseData = await response.json();
-                console.log("responseData:      "+responseData.arrayNumerosBoletos)
-                setBoletos(responseData.arrayNumerosBoletos)
+        try {
+            //const res = await fetch('http://192.168.101.20:5000/api/sorteos/boletos')
+            const res = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/boletos')
+            const data = await res.json();
+            setBoletos(data)
+
+            //HACIA JSON
+            //const resultComprobantes = JSON.stringify(result);
+    
+            //HACIA JAVASCRIPT
+            //const resultComprobantesJSCRIPT = JSON.parse(resultComprobantes);
+
+            //no borrar esta forma
+            //console.log(JSON.stringify(obtenerComprobantes()))
+
+            /*
+            <ul>
+            {["Item1", "Item2", "Item3"].map(item =>
+            <li key="{item}">{item}</li>
+            )}
+            </ul>
+            */
         } catch (error) {
-            console.log("El error es: " + error);
+            console.log("el error es: " + error);
         }
        
     }
     //const afiliarboleto = (valorObjectId) => {
-    const afiliarboleto = (valorIDBoleto, descripcionarticulos, costoarticulos, numero_boleto) => {
+    const afiliarboleto = (valorIDBoleto, descripcionarticulos, costoarticulos) => {
         console.log("Afiliando boleto...")
-        console.log("PANTALLA LISTADO BOLETOS - SERIE TALONARIO      "+route.params.serietalonario)
                    //AfiliarScreen = hacia donde va
                 navigation.navigate('AfiliarScreen',{
                     //No es necesario colocar explicitamente la palabra "params"
@@ -38,20 +54,13 @@ const ListadoBoletos = ({ navigation, route }) => {
                     valorIDsorteo: route.params.valorIDsorteo,    
                     valorIDBoleto: valorIDBoleto,
                     descripcionarticulos: descripcionarticulos,
-                    costoarticulos: costoarticulos,
-                    serietalonario: route.params.serietalonario,
-                    numero_boleto: numero_boleto,
-                    nombrevendedorasignado: route.params.nombrevendedorasignado,
-                    apellidovendedorasignado: route.params.apellidovendedorasignado,
-                    terminos_condiciones: route.params.terminos_condiciones,
-                    fecha_sorteo: route.params.fecha_sorteo,
-                    lugar_sorteo: route.params.lugar_sorteo,
+                    costoarticulos: costoarticulos
                     //}
                 })
     }
 
     useEffect(() => {
-        //console.log("HOLA - ejecutando useEffect");
+        console.log("ejecutando useEffect");
         obtenerBoletos();
     }, []);
     
@@ -60,13 +69,13 @@ const ListadoBoletos = ({ navigation, route }) => {
       //una sola vez, osea al renderizar por 
       //primera vez la aplicación
 
-      //boletosfiltrados = [];
+      boletosfiltrados = [];
       //boletosfiltrados = boletos.filter(e => e.estado==0)
-      //boletosfiltrados = boletos.filter(e => e.sorteo_id==route.params.valorIDsorteo)
+      boletosfiltrados = boletos.filter(e => e.sorteo_id==route.params.valorIDsorteo)
       //console.log("comprobantes ->    " + comprobantes.length);
       //console.log("comprobantesfiltrados ->    " + comprobantesfiltrados.length);
       //console.log("boletosfiltrados ->    " + boletosfiltrados);
-      //console.log("boletosfiltrados ->    " + JSON.stringify(boletosfiltrados) );
+      console.log("boletosfiltrados ->    " + JSON.stringify(boletosfiltrados) );
       
     return (
 <>
@@ -95,8 +104,7 @@ StatusBar.currentHeight: 0 }} >
                 //en filter "e" es cualquier letra
                 //0 = disponible || 1 = No disponible
                 //comprobantesfiltrados = comprobantes.filter(e => e.estado==0),
-                //boletosfiltrados.map(item => (
-                    boletos.map(item => (
+                boletosfiltrados.map(item => (
                     <View 
                         key={item._id}
                         style={{ 
@@ -108,7 +116,7 @@ StatusBar.currentHeight: 0 }} >
                     >
                         
                         <Text style={{color: "red"}}>
-                            { item.numero_boleto + " - " + route.params.descripcion_articulos + " - " + "US$" + item.costo + ".00"}
+                            { item._id + " - " + item.boletoSorteos.descripcion_articulos + " - " + "S/."+item.costo }
                         </Text>
                         <Icon 
                             name="caretright"
@@ -120,7 +128,7 @@ StatusBar.currentHeight: 0 }} >
                                 borderRadius: 100
                             }}
                             //onPress={()=>afiliarboleto(item._id)}
-                            onPress={()=>afiliarboleto(item._id, route.params.descripcion_articulos, item.costo, item.numero_boleto)}
+                            onPress={()=>afiliarboleto(item._id, item.boletoSorteos.descripcion_articulos, item.costo)}
                         />
                     </View>
                     

@@ -1,55 +1,21 @@
 import React, {useEffect, useState} from 'react';  
-import { View, Text, SafeAreaView, Platform, StatusBar, StyleSheet, TouchableOpacity, TextInput, ScrollView, Button} from 'react-native';
+import { View, Text, SafeAreaView, Platform, StatusBar, StyleSheet, TouchableOpacity, TextInput, ScrollView, Button, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const ListadoSorteos = ({ navigation, route }) => {
   
-    const [sorteos, setSorteos] = useState([])
-    /*
-    comprobantes = [
-        {
-            _id: "64ae098d7824c3e5ee312d8a",
-            serieprincipal: 1,
-            seriesecundaria: 1,
-            terminoscondiciones: "TEXTO DE TERMINOS Y CONDICIONES",
-            fechacompra: 11,
-            idpersona: "1",
-            idarticulo: "1",
-            __v: 0
-        },
-        {
-            _id: "64ae237a7824c3e5ee312d8c",
-            serieprincipal: 1,
-            seriesecundaria: 2,
-            terminoscondiciones: "TEXTO DE TERMINOS Y CONDICIONES",
-            fechacompra: 11,
-            idpersona: "1",
-            idarticulo: "1",
-            __v: 0
-            },
-    ]
-    */
-    
-    //ejemplo para probar API con fetch
-    //https://pokeapi.co/api/v2/pokemon/ditto
-    
+    const [sorteos, setSorteos] = useState([]);
+    usuarioFrEnd = route.params.usuario;
+    claveFrEnd = route.params.clave;
+
     const obtenerSorteos = async() => {
-        
         try {
-            //const res = await fetch('http://192.168.101.20:5000/api/sorteos')
-            const res = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos')
-            const data = await res.json();
+            const response = await fetch('https://lotery-mongodb-vercel.vercel.app/api/sorteos/')
+            //const response = await fetch('http://192.168.101.20:5000/api/sorteos')
+            const data = await response.json();
             setSorteos(data)
-
-            //HACIA JSON
-            //const resultComprobantes = JSON.stringify(result);
-    
-            //HACIA JAVASCRIPT
-            //const resultComprobantesJSCRIPT = JSON.parse(resultComprobantes);
-
             //no borrar esta forma
             //console.log(JSON.stringify(obtenerComprobantes()))
-
             /*
             <ul>
             {["Item1", "Item2", "Item3"].map(item =>
@@ -58,12 +24,60 @@ const ListadoSorteos = ({ navigation, route }) => {
             </ul>
             */
         } catch (error) {
-            console.log("el error es: " + error);
+            console.log("El error es: " + error);
         }
        
     }
-    const verBoletosDisponibles = (valorIDsorteo) => {
-        console.log("Mostrando boletos disponibles...")
+    const verBoletosDisponibles = async(usuarioFrEnd,claveFrEnd,valorIDsorteo,descripcion_articulos,terminos_condiciones,fecha_sorteo,lugar) => {
+        try {//Encontramos el ID del vendedor basados en su usuario y clave
+            const response = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/buscaridvendedor/${usuarioFrEnd},${claveFrEnd}`,{
+            //const response = await fetch(`http://192.168.101.20:5000/api/sorteos/buscaridvendedor/${usuarioFrEnd},${claveFrEnd}`,{
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
+                },
+            })
+                const responseData = await response.json();
+                //console.log("responseData:      "+responseData.messageresultado)
+                var idvendedorasignado = responseData.messageresultado_id;
+                var nombrevendedorasignado = responseData.messageresultado_nombre;
+                var apellidovendedorasignado = responseData.messageresultado_apellidos;
+                
+        } catch (error) {
+            console.log("El error es: " + error);
+        }
+
+
+        console.log("idvendedorasignado   ->    "+idvendedorasignado) 
+        try {//Encontramos el ID del talonario asignado a un vendedor específico
+            const response = await fetch(`https://lotery-mongodb-vercel.vercel.app/api/sorteos/buscaridtalonario/${valorIDsorteo},${idvendedorasignado}`,{
+            //const response = await fetch(`http://192.168.101.20:5000/api/sorteos/buscaridtalonario/${valorIDsorteo},${idvendedorasignado}`,{
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'//Indica que la solicitud a utilizar esta en formato JSON
+                },
+            })
+                const responseData = await response.json();
+                //console.log("responseData:      "+responseData.messageresultado)
+                var idtalonario = responseData.messageresultado_idtalonario;
+                var serietalonario = responseData.messageresultado_serietalonario;
+        } catch (error) {
+            console.log("El error es: " + error);
+        }
+
+        //console.log("PANTALLA LISTADOSORTEOS - SERIE TALONARIO      "+serietalonario)
+        var fechadesorteo = new Date(fecha_sorteo);
+        ///Enviando los datos de fecha de sorteo
+        const anio = fechadesorteo.getFullYear();//typeof number
+        const mes = (fechadesorteo.getMonth() + 1); //getMonth() siempre suma + 1 //typeof number
+        const dia = fechadesorteo.getDate();//typeof number
+        const hora = fechadesorteo.getHours();//typeof number
+        const minuto = fechadesorteo.getMinutes();//typeof number
+        const segundo = fechadesorteo.getSeconds();//typeof number
+        //Cadena fecha de sorteo
+        var cadenafechadesorteo = dia+"/"+mes+"/"+anio+" - "+hora+":"+minuto+":"+segundo
+        
+        //console.log("Mostrando boletos disponibles...")
         //navigation.navigate('ListadoBoletos')
         //ListadoBoletos = hacia donde va
                 navigation.navigate('ListadoBoletos',{
@@ -75,12 +89,20 @@ const ListadoSorteos = ({ navigation, route }) => {
                     //id: es la pantalla desde donde se está enviando el dato
                     id: 'ListadoSorteos',    
                     valorIDsorteo: valorIDsorteo,
+                    idtalonario: idtalonario,
+                    descripcion_articulos: descripcion_articulos,
+                    serietalonario: serietalonario,
+                    nombrevendedorasignado: nombrevendedorasignado,
+                    apellidovendedorasignado: apellidovendedorasignado,
+                    terminos_condiciones: terminos_condiciones,
+                    fecha_sorteo: cadenafechadesorteo,
+                    lugar_sorteo: lugar,
                     //}
                 })
     }
 
     useEffect(() => {
-        console.log("ejecutando useEffect");
+        //console.log("ejecutando useEffect");
         obtenerSorteos();
     }, []);
     
@@ -89,10 +111,12 @@ const ListadoSorteos = ({ navigation, route }) => {
       //una sola vez, osea al renderizar por 
       //primera vez la aplicación
 
+      /*
       sorteosfiltrados = [];
       sorteosfiltrados = sorteos.filter(e => e.estado == '0')//0 = Sorteos Activos
       console.log("sorteos ->    " + sorteos.length);
       console.log("sorteosfiltrados ->    " + sorteosfiltrados.length);
+      */
     return (
 <>
 
@@ -133,7 +157,7 @@ StatusBar.currentHeight: 0 }} >
                     >
                         
                         <Text style={{color: "red"}}>
-                            {item._id + "    -    " + item.fecha_sorteo}
+                            {item._id + "    -    " + new Date(item.fecha_sorteo)}
                         </Text>
                         <Icon 
                             name="caretright"
@@ -144,7 +168,7 @@ StatusBar.currentHeight: 0 }} >
                                 padding: 10,
                                 borderRadius: 100
                             }}
-                            onPress={()=>verBoletosDisponibles(item._id)}
+                            onPress={()=>verBoletosDisponibles(usuarioFrEnd,claveFrEnd,item._id,item.descripcion_articulos,item.terminos_condiciones,item.fecha_sorteo,item.lugar)}
                         />
                     </View>
                     

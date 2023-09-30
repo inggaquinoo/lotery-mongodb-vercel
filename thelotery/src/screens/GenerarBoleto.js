@@ -12,16 +12,35 @@ const GenerarBoleto = ({navigation, route}) => {
   //console.log("route.params ->    " + route.params.IDBoleto)
 
   const sorteo_id = route.params.IDSorteo;
-  const usuario_id = route.params.IDusuario;
+  //const usuario_id = route.params.IDusuario;
   const descripcionarti = route.params.descripcionarticulos;
   const costoarti = route.params.costoarticulos;
   const nombrecli = route.params.nombrecliente;
   const apellidocli = route.params.apellidocliente;
   const celularclie = route.params.celularcliente;
-  const fecha_compra = "2023-08-28";
-  const estado_boleto = "1";
+  const serietalonario = route.params.serietalonario;
+  const numero_boleto = route.params.numero_boleto;
+  const nombrevendedorasignado = route.params.nombrevendedorasignado;
+  const apellidovendedorasignado = route.params.apellidovendedorasignado;
+  const terminos_condiciones = route.params.terminos_condiciones;
+  const fecha_sorteo = route.params.fecha_sorteo;
+  const lugar_sorteo = route.params.lugar_sorteo;
+  
+  //Constantes para la fecha de compra
+  const anio = route.params.anio;
+  const mes = route.params.mes;
+  const dia = route.params.dia;
+  const hora = route.params.hora;
+  const minuto = route.params.minuto;
+  const segundo = route.params.segundo;
 
-  const GenerarBoletoComprobante = async(usuario_id, fecha_compra, estado_boleto) => {
+  //Cadena fecha de compra
+  const fechadecompra = dia+"/"+mes+"/"+anio+" - "+hora+":"+minuto+":"+segundo
+  
+  //console.log("PANTALLA GENERAR BOLETO - SERIE TALONARIO      "+serietalonario)
+  
+  //const GenerarBoletoComprobante = async(usuario_id, fecha_compra, estado_boleto) => {
+  const GenerarBoletoComprobante = async(fechadecompra) => {
     /*
     console.log("Comenzando generación de Boleto")
     console.log("IDBoleto ->    "+route.params.IDBoleto);
@@ -64,15 +83,19 @@ const GenerarBoleto = ({navigation, route}) => {
                   <header>
                     <h1>Lotería "Nueva Lotería"</h1>
                   </header>
-                  <h1>Información Importante:</h1>
+                  <h1>DATOS DEL SORTEO</h1>
                   <table>
                     <tr>
                       <th>SORTEO</th>
                       <td>${sorteo_id}</td> 
                     </tr>
                     <tr>
+                      <th>SERIE</th>
+                      <td>${serietalonario}</td>
+                    </tr>
+                    <tr>
                       <th>BOLETO</th>
-                      <td>${route.params.IDBoleto}</td>
+                      <td>${numero_boleto}</td>
                     </tr>
                     <tr>
                       <th>PREMIOS</th>
@@ -80,8 +103,23 @@ const GenerarBoleto = ({navigation, route}) => {
                     </tr>
                     <tr>
                       <th>COSTO</th>
-                      <td>${costoarti}</td>
+                      <td>US$ ${costoarti}.00</td>
                     </tr>
+                    <tr>
+                      <th>FECHA DE COMPRA</th>
+                      <td>${fechadecompra}</td>
+                    </tr>
+                    <tr>
+                      <th>FECHA DE SORTEO</th>
+                      <td>${fecha_sorteo}</td>
+                    </tr>
+                    <tr>
+                      <th>LUGAR DEL SORTEO</th>
+                      <td>${lugar_sorteo}</td>
+                    </tr>
+                  </table>
+                  <h1>DATOS DEL CLIENTE</h1>
+                  <table>
                     <tr>
                       <th>NOMBRES</th>
                       <td>${nombrecli}</td>
@@ -94,13 +132,23 @@ const GenerarBoleto = ({navigation, route}) => {
                       <th>CELULAR</th>
                       <td>${celularclie}</td>
                     </tr>
+                  </table>
+                  <h1>DATOS DEL VENDEDOR</h1>
+                  <table>
                     <tr>
-                      <th>FECHA DE COMPRA</th>
-                      <td>${fecha_compra}</td>
+                      <th>NOMBRES</th>
+                      <td>${nombrevendedorasignado}</td>
                     </tr>
                     <tr>
+                      <th>APELLIDOS</th>
+                      <td>${apellidovendedorasignado}</td>
+                    </tr>
+                  </table>
+                  <h1>TERMINOS Y CONDICIONES</h1>
+                  <table>
+                    <tr>
                       <th>TERMINOS Y CONDICIONES</th>
-                      <td>terminos y condiciones</td>
+                      <td>${terminos_condiciones}</td>
                     </tr>
                   </table>
                   <footer>
@@ -232,6 +280,12 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
 
   return (
     <View>
+       <View
+          style={Styles.datospares}
+        >
+            <Text>----------DATOS DEL SORTEO----------</Text>
+        </View>
+
         <View
           style={Styles.datospares}
         >
@@ -243,15 +297,23 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         <View
           style={Styles.datospares}
         >
-            <Text>BOLETO:</Text>
+            <Text>SERIE:</Text>
             <Text
-            > {route.params.IDBoleto}</Text>
+            > {serietalonario}</Text>
         </View>
 
         <View
           style={Styles.datospares}
         >
-            <Text>DESCRIPCION:</Text>
+            <Text>BOLETO:</Text>
+            <Text
+            > {numero_boleto}</Text>
+        </View>
+
+        <View
+          style={Styles.datospares}
+        >
+            <Text>PREMIOS:</Text>
             <Text
             > {descripcionarti}</Text>
         </View>
@@ -261,9 +323,39 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
         >
             <Text>COSTO:</Text>
             <Text
-            > US$ {costoarti}</Text>
+            > US$ {costoarti}.00</Text>
         </View>
 
+        <View
+          style={Styles.datospares}
+        >
+            <Text>FECHA DE COMPRA:</Text>
+            <Text
+            >{fechadecompra}</Text>
+        </View>
+
+        <View
+          style={Styles.datospares}
+        >
+            <Text>FECHA DE SORTEO:</Text>
+            <Text
+            >{fecha_sorteo}</Text>
+        </View>
+
+        <View
+          style={Styles.datospares}
+        >
+            <Text>LUGAR DEL SORTEO:</Text>
+            <Text
+            >{lugar_sorteo}</Text>
+        </View>
+
+        <View
+        
+          style={Styles.datospares}
+        >
+            <Text>----------DATOS DEL CLIENTE----------</Text>
+        </View>
         <View
           style={Styles.datospares}
         >
@@ -288,6 +380,26 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
             > {celularclie}</Text>
         </View>
         <View
+          style={Styles.datospares}
+        >
+            <Text>----------DATOS DEL VENDEDOR----------</Text>
+        </View>
+        <View
+          style={Styles.datospares}
+        >
+            <Text>NOMBRE:</Text>
+            <Text
+            > {nombrevendedorasignado}</Text>
+        </View>
+
+        <View
+          style={Styles.datospares}
+        >
+            <Text>APELLIDOS:</Text>
+            <Text
+            > {apellidovendedorasignado}</Text>
+        </View>
+        <View
             style={{ 
                 padding: 20,
                 flexDirection: 'row',
@@ -298,7 +410,8 @@ const compartirWhatsApp = (permiso, nombrearchivooriginal) => {
             <TouchableOpacity
               /* NOTA: cuando usas ()=> console.log("Generando...") refresca la consola inmediatemente
               cuando usas console.log("Generando...") NO refresca la consola*/
-              onPress={()=>GenerarBoletoComprobante(usuario_id, fecha_compra,estado_boleto, PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)}
+              //onPress={()=>GenerarBoletoComprobante(usuario_id, fecha_compra,PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)}
+              onPress={()=>GenerarBoletoComprobante(fechadecompra)}
             >
                   <Text
                   style = {{ fontSize: 15, backgroundColor: "yellow" }}

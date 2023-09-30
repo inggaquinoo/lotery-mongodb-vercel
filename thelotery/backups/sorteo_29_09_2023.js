@@ -1,9 +1,9 @@
 const express = require('express')
-const ModeloSorteo = require('../models/file')
-const ModeloBoleto = require('../models/boleto')
-const ModeloCliente = require('../models/cliente')
-const ModeloEmpleado = require('../models/empleado')
-const ModeloTalonario = require('../models/talonario')
+const ModeloSorteo = require('../../server/models/file')
+const ModeloBoleto = require('../../server/models/boleto')
+const ModeloCliente = require('../../server/models/cliente')
+const ModeloEmpleado = require('../../server/models/empleado')
+const ModeloTalonario = require('../../server/models/talonario')
 const router = express.Router()
 
 const mongoose = require('mongoose')
@@ -229,6 +229,45 @@ vendedor.save() //Aquí sucede el guardar los datos en la BD Mongo
 
 });
 
+
+
+/*
+//RUTA PARA CREAR UN TODOS LOS EMPLEADOS(VENDEDORES) DE UN SORTEO
+// /api/sorteos/crearempleados/:id_cantidadvendedores
+router.put('/crearvendedores/:id_cantidadvendedores', (req, res) => { //:id, en este caso 'id' es lo que llega y para obtener el dato
+        //colocas req.params.id. 'id' puede ser cualquier letra(s)
+        //los ':' dos puntos siempre van adelante de las letras
+        const cantvendedores = req.params.id_cantidadvendedores;
+        crearvendedores();
+            function crearvendedores() {
+                console.log("cantvendedores   "+cantvendedores)
+                        for (var i=1; i <=cantvendedores; i++)
+                        {
+                                ModeloEmpleado.collection.insertMany([
+                                {
+                                    nombre: "",
+                                    apellidos: "",
+                                    numero_celular: "",
+                                    tipo_usuario: "vendedor",
+                                    usuario: "",
+                                    clave: "",
+                                    estado_empleado: "0",
+                                }
+                                ])
+                        }//fin del for
+            }//Fin de la funcion crearvendedores
+            //IMPORTANTÍSIMO: siempre que uses PUT y POST debes devolver una respuesta. 
+        //Prueba tambien con GET.
+        //con PUT no regresa ninguna respuesta, mejor usa res.end(), 
+        //cuidado res.end y res.send no pueden estar en el mismo
+        //bloque de codigo ó juntos. 
+        //res.send tiene su forma para retornar el dato, así: 
+        //res.send({message: 'Hola'})
+        res.send({ 
+        messageconfirmacion: 'Vendedores creados satisfactoriamente',
+        })
+});
+*/
 
 //RUTA PARA ASIGNAR EL NUMERO DE SERIE A UN VENDEDOR
 // /api/sorteos/asignartalonariovendedor/:id_sorteo,/:serie_talonario
